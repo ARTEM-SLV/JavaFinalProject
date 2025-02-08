@@ -14,6 +14,22 @@ public class Car implements Serializable {
     }
 
 
+    public Integer getPower() {
+        return power;
+    }
+
+    public String getModel() {
+        return model;
+    }
+
+    public Integer getYear() {
+        return year;
+    }
+
+    public String toString(){
+        return "Car{" + "power=" + power + ", model='" + model + '\'' + ", year=" + year + '}';
+    }
+
     public static class CarBuilder {
         private Integer power;
         private String model;

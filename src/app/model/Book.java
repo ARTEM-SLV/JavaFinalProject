@@ -12,8 +12,23 @@ public class Book implements Serializable {
         this.pageCount = pageCount;
     }
 
+    public String getAuthor() {
+        return author;
+    }
 
-    public static class BookBuilder {
+    public String getName() {
+        return name;
+    }
+
+    public Integer getPageCount() {
+        return pageCount;
+    }
+
+    public String toString(){
+        return "Book{" + "author=" + author + ", name='" + name + '\'' + ", page count=" + pageCount + '}';
+    }
+
+    public static class BookBuilder{
         private String author;
         private String name;
         private Integer pageCount;

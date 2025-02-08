@@ -13,6 +13,22 @@ public class Vegetable implements Serializable {
         this.color = color;
     }
 
+    public String getType() {
+        return type;
+    }
+
+    public Double getWeight() {
+        return weight;
+    }
+
+    public String getColor() {
+        return color;
+    }
+
+    public String toString(){
+        return "Vegetable{" + "type=" + type + ", weight='" + weight + '\'' + ", color=" + color + '}';
+    }
+
     public static class VegetableBuilder {
         private String type;
         private Double weight;
