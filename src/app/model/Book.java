@@ -1,5 +1,4 @@
 package app.model;
-
 import java.io.Serializable;
 
 public class Book implements Serializable {
@@ -13,41 +12,49 @@ public class Book implements Serializable {
         this.pageCount = pageCount;
     }
 
+    public String getAuthor() {
+        return author;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public Integer getPageCount() {
+        return pageCount;
+    }
+
+    public String toString(){
+        return "Book{" + "author=" + author + ", name='" + name + '\'' + ", page count=" + pageCount + '}';
+    }
+
     public static class BookBuilder{
         private String author;
         private String name;
         private Integer pageCount;
 
-        public BookBuilder author(String author)
-        {
+        public BookBuilder author(String author) {
             this.author = author;
             return this;
         }
 
-        public BookBuilder name(String name)
-        {
+        public BookBuilder name(String name) {
             this.name = name;
             return this;
         }
 
-        public BookBuilder pageCount(Integer pageCount)
-        {
+        public BookBuilder pageCount(Integer pageCount) {
             this.pageCount = pageCount;
             return this;
         }
 
-        public Book build()
-        {
-            return new Book(author,name,pageCount);
+        public Book build() {
+            return new Book(author, name, pageCount);
         }
     }
 
     @Override
     public String toString() {
-        return "BookBuilder{" +
-                "author='" + author + '\'' +
-                ", name='" + name + '\'' +
-                ", pageCount=" + pageCount +
-                '}';
+        return "Book," + "Автор: " + author + "," + "Название: " + name + "," + "Страниц: " + pageCount;
     }
 }
