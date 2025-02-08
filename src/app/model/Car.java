@@ -26,10 +26,6 @@ public class Car implements Serializable {
         return year;
     }
 
-    public String toString(){
-        return "Car{" + "power=" + power + ", model='" + model + '\'' + ", year=" + year + '}';
-    }
-
     public static class CarBuilder {
         private Integer power;
         private String model;
@@ -57,6 +53,6 @@ public class Car implements Serializable {
 
     @Override
     public String toString() {
-        return "Car," + "Мощность: " + power + "," + "Марка: " + model + "," + "Год выпуска: " + year;
+        return "Car, " + "Мощность: " + power + "," + "Марка: " + model + "," + "Год выпуска: " + year;
     }
 }

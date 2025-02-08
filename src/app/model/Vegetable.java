@@ -25,10 +25,6 @@ public class Vegetable implements Serializable {
         return color;
     }
 
-    public String toString(){
-        return "Vegetable{" + "type=" + type + ", weight='" + weight + '\'' + ", color=" + color + '}';
-    }
-
     public static class VegetableBuilder {
         private String type;
         private Double weight;
@@ -56,6 +52,6 @@ public class Vegetable implements Serializable {
 
     @Override
     public String toString() {
-        return "Vegetable," + "Тип: " + type + "," + "Вес: " + weight + "," + "Цвет: " + color;
+        return "Vegetable, " + "Тип: " + type + ", " + "Вес: " + weight + ", " + "Цвет: " + color;
     }
 }

@@ -22,6 +22,6 @@ public class UniversalExecutor <T> implements Executor<T>{
         System.out.println("\nПоиск элемента:");
 
         int index = searcher.search(arr, element, comparator);
-        System.out.println("Результат поиска элемента: " + (index >= 0 ? element : "не найден"));
+        System.out.println("Результат поиска элемента: " + (index >= 0 ? element + " найден в позиции " + index : "не найден"));
     }
 }
