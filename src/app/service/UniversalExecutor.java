@@ -18,11 +18,10 @@ public class UniversalExecutor <T> implements Executor<T>{
     }
 
     @Override
-    public void search(T[] arr, Searcher<T> searcher, Comparator comparator, int finderElement) {
+    public void search(T[] arr, Searcher<T> searcher, Comparator comparator, T element) {
         System.out.println("\nПоиск элемента:");
 
-        T searchCar = arr[finderElement];
-        int index = searcher.search(arr, searchCar, comparator);
-        System.out.println("Результат поиска элемента [" + finderElement + "]: " + (index >= 0 ? arr[index] : "не найден"));
+        int index = searcher.search(arr, element, comparator);
+        System.out.println("Результат поиска элемента: " + (index >= 0 ? element : "не найден"));
     }
 }

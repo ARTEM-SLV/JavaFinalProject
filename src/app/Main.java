@@ -26,7 +26,8 @@ public class Main {
 
         Executor<Car> executor = new UniversalExecutor<>();
         executor.sort(cars, sorter, carComparator);
-        executor.search(cars, searcher, carComparator, 0);
+        Car car = new Car.CarBuilder().power(200).model("BMW").year(2020).build();
+        executor.search(cars, searcher, carComparator, car);
     }
 
     private static Car[] createCars(){
