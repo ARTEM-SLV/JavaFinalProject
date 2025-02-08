@@ -1,6 +1,8 @@
 package app.model;
 
-public class Car {
+import java.io.Serializable;
+
+public class Car implements Serializable {
     private Integer power;
     private String model;
     private Integer year;
@@ -37,5 +39,14 @@ public class Car {
         public Car build(){
             return new Car(power,model,year);
         }
+    }
+
+    @Override
+    public String toString() {
+        return "CarBuilder{" +
+                "model='" + model + '\'' +
+                ", power=" + power +
+                ", year=" + year +
+                '}';
     }
 }

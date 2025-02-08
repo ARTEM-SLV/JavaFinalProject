@@ -1,6 +1,8 @@
 package app.model;
 
-public class Book {
+import java.io.Serializable;
+
+public class Book implements Serializable {
     private String author;
     private String name;
     private Integer pageCount;
@@ -38,5 +40,14 @@ public class Book {
         {
             return new Book(author,name,pageCount);
         }
+    }
+
+    @Override
+    public String toString() {
+        return "BookBuilder{" +
+                "author='" + author + '\'' +
+                ", name='" + name + '\'' +
+                ", pageCount=" + pageCount +
+                '}';
     }
 }

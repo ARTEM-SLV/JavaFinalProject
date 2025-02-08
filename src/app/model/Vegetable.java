@@ -1,6 +1,8 @@
 package app.model;
 
-public class Vegetable {
+import java.io.Serializable;
+
+public class Vegetable implements Serializable {
     private String type;
     private Double weight;
     private String color;
@@ -34,5 +36,14 @@ public class Vegetable {
         public Vegetable build(){
             return new Vegetable(type,weight,color);
         }
+    }
+
+    @Override
+    public String toString() {
+        return "Vegetable{" +
+                "color='" + color + '\'' +
+                ", type='" + type + '\'' +
+                ", weight=" + weight +
+                '}';
     }
 }
