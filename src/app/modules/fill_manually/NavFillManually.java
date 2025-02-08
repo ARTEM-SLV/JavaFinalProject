@@ -9,14 +9,14 @@ public class NavFillManually {
             .firstMessage("Введите длину массива: ")
             .optionsMessage("""
             Какой тип данных будем использовать?
-            1 - Car
-            2 - Book
-            3 - Root vegetable
+            1 - Автомобиль
+            2 - Книга
+            3 - Корнеплод
             """)
             .options(Map.of(
-            1, "Паттерн Car: model power value",
-            2, "Паттерн Book: name author pages",
-            3, "Паттерн Vegetable: kek lol beb"
+            1, "Паттерн Автомобиль: Мощность | Модель | Год производства",
+            2, "Паттерн Книга: Автор | Название | Количество страниц",
+            3, "Паттерн Корнеплод: Тип | Вес | Цвет"
             ))
             .build();
 

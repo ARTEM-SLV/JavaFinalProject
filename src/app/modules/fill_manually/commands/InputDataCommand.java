@@ -1,8 +1,7 @@
 package app.modules.fill_manually.commands;
 
-import java.util.Scanner;
-
 import app.modules.fill_manually.commands.interfaces.IExecuteReturnValue;
+import java.util.Scanner;
 
 public class InputDataCommand implements IExecuteReturnValue<String> {
     private final Scanner scanner;
@@ -31,6 +30,16 @@ public class InputDataCommand implements IExecuteReturnValue<String> {
             this.clearConsole();
         } while (true);
     }
+
+    // TODO
+    // private void tablePrint(StringBuilder str) {
+    //     System.out.printf("%-30s %-15s %-10s%n", "Мощность", "Модель", "Год производства");
+    //     System.out.println("------------------------------------------");
+    //     for (car : cars) {
+    //
+    //         System.out.printf("%-30s %-15d %-10s%n", object.getPower(), object.getModel(), object.getYear());
+    //     }
+    // }
 
     private void clearConsole() {
         System.out.print("\033[H\033[2J");
