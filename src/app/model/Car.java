@@ -1,6 +1,8 @@
 package app.model;
 
-public class Car {
+import java.io.Serializable;
+
+public class Car implements Serializable {
     private Integer power;
     private String model;
     private Integer year;
@@ -11,31 +13,34 @@ public class Car {
         this.year = year;
     }
 
-    public static class CarBuilder{
+
+    public static class CarBuilder {
         private Integer power;
         private String model;
         private Integer year;
 
-        public CarBuilder power(Integer power)
-        {
+        public CarBuilder power(Integer power) {
             this.power = power;
             return this;
         }
 
-        public CarBuilder model(String model)
-        {
+        public CarBuilder model(String model) {
             this.model = model;
             return this;
         }
 
-        public CarBuilder year(Integer year)
-        {
+        public CarBuilder year(Integer year) {
             this.year = year;
             return this;
         }
 
-        public Car build(){
-            return new Car(power,model,year);
+        public Car build() {
+            return new Car(power, model, year);
         }
+    }
+
+    @Override
+    public String toString() {
+        return "Car," + "Мощность: " + power + "," + "Марка: " + model + "," + "Год выпуска: " + year;
     }
 }
