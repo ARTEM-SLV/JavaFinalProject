@@ -11,6 +11,18 @@ public class Book {
         this.pageCount = pageCount;
     }
 
+    public String getAuthor() {
+        return author;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public Integer getPageCount() {
+        return pageCount;
+    }
+
     public static class BookBuilder{
         private String author;
         private String name;
