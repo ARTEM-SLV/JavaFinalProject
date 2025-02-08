@@ -23,6 +23,10 @@ public class Vegetable {
         return color;
     }
 
+    public String toString(){
+        return "Vegetable{" + "type=" + type + ", weight='" + weight + '\'' + ", color=" + color + '}';
+    }
+
     public static class VegetableBuilder{
         private String type;
         private Double weight;

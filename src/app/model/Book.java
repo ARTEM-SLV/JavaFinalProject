@@ -23,6 +23,10 @@ public class Book {
         return pageCount;
     }
 
+    public String toString(){
+        return "Book{" + "author=" + author + ", name='" + name + '\'' + ", page count=" + pageCount + '}';
+    }
+
     public static class BookBuilder{
         private String author;
         private String name;
