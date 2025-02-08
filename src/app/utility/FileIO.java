@@ -65,7 +65,7 @@ public class FileIO {
 
     // Запись в файл
     public static void write(String filename, Serializable[] objects) {
-        try (BufferedWriter writer = new BufferedWriter(new FileWriter(filename))) {
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(filename, true))) {
             for (Serializable obj : objects) {
                 String strObj = obj.toString().replace(",", "\n");
                 writer.write(String.format("%s%n", strObj));
