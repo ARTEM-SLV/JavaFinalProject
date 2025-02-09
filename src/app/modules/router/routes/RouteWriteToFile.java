@@ -1,22 +1,18 @@
 package app.modules.router.routes;
 
+import app.modules.router.EnumRoutes;
 import app.modules.router.IRoute;
 import app.modules.router.Router;
+import app.utility.FileIO;
 
-import java.io.BufferedWriter;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.OutputStreamWriter;
-import java.nio.charset.StandardCharsets;
+import java.io.*;
 import java.util.Scanner;
 
 public class RouteWriteToFile implements IRoute {
     private final Router router;
-    private final Scanner scanner;
 
-    public RouteWriteToFile(Router router, Scanner sc) {
+    public RouteWriteToFile(Router router) {
         this.router = router;
-        this.scanner = sc;
     }
 
     @Override
@@ -25,21 +21,20 @@ public class RouteWriteToFile implements IRoute {
     }
 
     @Override
-    public void execute() {
+    public void execute(Scanner scanner) {
         var data = this.router.getContext().Data;
+        try {
+            Serializable[] serializableData = new Serializable[data.length];
 
-        try (BufferedWriter writer = new BufferedWriter(
-                new OutputStreamWriter(new FileOutputStream("output.txt"), StandardCharsets.UTF_8))) {
-            for (Object item : data) {
-                if (item != null) {
-                    writer.write(item.toString());
-                    writer.newLine();
-                }
+            for (int i = 0; i < data.length; i++) {
+                serializableData[i] = (Serializable) data[i];
             }
-            System.out.println("Данные успешно записаны в файл.");
-            this.router.navigateTo("exit");
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+
+            FileIO.write("output.txt", serializableData);
+
+            this.router.navigateTo(EnumRoutes.MENU);
+        } catch (Exception e) {
+            System.out.println("Ошибка>>RouteWriteToFile");
+       }
     }
 }
