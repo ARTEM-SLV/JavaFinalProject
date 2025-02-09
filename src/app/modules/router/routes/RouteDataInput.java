@@ -55,30 +55,6 @@ public class RouteDataInput implements IRoute {
             }
         } while (true);
 
-//        var count = 0;
-//
-//        T[] types = (T[]) new Object[this.length];
-//
-//        do {
-//            var rawData = scanner.nextLine();
-//            System.out.print(rawData);
-//            var d = rawData.split(" ");
-//            if (d.length < 3) {
-//                System.out.println("Неверный формат данных. Введите три значения.");
-//                continue;
-//            }
-//
-//            // Используем функцию для создания объекта типа T
-//            types[count] = creator.apply(d);
-//
-//            this.clearConsole();
-//            this.tablePrint(types);
-//
-//            count++;
-//            if (count >= length) {
-//                return types;
-//            }
-//        } while (true);
     }
 
     private void tablePrint(OptionsType type, Object[] items) {
@@ -107,31 +83,6 @@ public class RouteDataInput implements IRoute {
         }
     }
 
-//    private void tablePrint(/*T[] items*/) {
-//
-//        switch (this.type) {
-//            case BOOK:
-//                System.out.printf("%-30s %-15s %-10s%n", "Автор", "Название", "Страницы");
-//
-//                break;
-//            case CAR:
-//                System.out.printf("%-30s %-15s %-10s%n", "Мощность", "Модель", "Год");
-//                break;
-//            case VEGETATION:
-//                System.out.printf("%-30s %-15s %-10s%n", "Тип", "Вес", "Цвет");
-//                break;
-//
-//        }
-//        System.out.println("------------------------------------------");
-//
-//        if (items != null) {
-//            for (var item : items) {
-//                if (item != null) {
-//                    System.out.println(item);
-//                }
-//            }
-//        }
-//    }
 
     private void clearConsole() {
         System.out.print("\033[H\033[2J");
