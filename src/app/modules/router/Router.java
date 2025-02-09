@@ -50,7 +50,7 @@ public class Router {
 
     public void process() {
         if (this.curCommand == null) return;
-        this.navigateTo("menu");
+        this.navigateTo(EnumRoutes.MENU);
     }
 
     private void clearDisplay() {
