@@ -1,20 +1,22 @@
-package app.modules.fill_manually.commands;
+package app.modules.router.routes;
 
-import app.modules.fill_manually.commands.interfaces.IDisplayView;
-import app.modules.fill_manually.commands.interfaces.IHandlerInput;
-import app.modules.fill_manually.commands.types.Type;
+import app.modules.router.IRoute;
+import app.modules.router.OptionsType;
+import app.modules.router.Router;
+
 import java.util.Scanner;
 
-public class SelectOptionCommand implements IDisplayView, IHandlerInput<Type> {
-
+public class RouteOptions implements IRoute {
+    private final Router router;
     private final Scanner scanner;
 
-    public SelectOptionCommand(Scanner scanner) {
-        this.scanner = scanner;
+    public RouteOptions(Router router, Scanner sc) {
+        this.router = router;
+        this.scanner = sc;
     }
 
     @Override
-    public void displayView() {
+    public void render() {
         System.out.println("""
             Какой тип данных будем использовать?
             1 - Автомобиль
@@ -24,7 +26,9 @@ public class SelectOptionCommand implements IDisplayView, IHandlerInput<Type> {
     }
 
     @Override
-    public Type handlerInput() {
+    public void execute() {
+        this.render();
+
         while (true) {
             try {
 
@@ -32,17 +36,22 @@ public class SelectOptionCommand implements IDisplayView, IHandlerInput<Type> {
 
                 switch (selectOption) {
                     case 1 -> {
-                        return Type.CAR;
+                        this.router.getContext().optionsType = OptionsType.CAR;
+                        break;
                     }
                     case 2 -> {
-                        return Type.BOOK;
+                        this.router.getContext().optionsType = OptionsType.BOOK;
+                        break;
                     }
                     case 3 -> {
-                        return Type.VEGETATION;
+                        this.router.getContext().optionsType = OptionsType.VEGETATION;
+                        break;
                     }
                 }
 
                 this.clearConsole();
+                this.router.navigateTo("select/input/data");
+                return;
             } catch (Exception e) {
                 System.out.println("Ошибка: Введите число, а не строку. Попробуйте снова.");
             }

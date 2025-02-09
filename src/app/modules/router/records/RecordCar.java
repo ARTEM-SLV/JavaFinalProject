@@ -1,4 +1,4 @@
-package app.modules.fill_manually.commands.records;
+package app.modules.router.records;
 
 public record RecordCar(String power, String model, String year) {
 
