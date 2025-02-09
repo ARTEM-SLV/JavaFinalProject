@@ -71,7 +71,7 @@ public class FileIO {
     }
 
     // Запись в файл
-    public static void write(String filename, Serializable[] objects) {
+    public static void write(String filename, Serializable... objects) {
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(filename, true))) {
             writer.newLine();
             writer.newLine();
