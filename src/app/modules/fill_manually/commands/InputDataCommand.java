@@ -1,45 +1,86 @@
 package app.modules.fill_manually.commands;
 
-import app.modules.fill_manually.commands.interfaces.IExecuteReturnValue;
+import app.modules.fill_manually.commands.interfaces.IDisplayView;
+import app.modules.fill_manually.commands.interfaces.IHandlerInput;
+import app.modules.fill_manually.commands.types.Type;
 import java.util.Scanner;
+import java.util.function.Function;
 
-public class InputDataCommand implements IExecuteReturnValue<String> {
+public class InputDataCommand<T> implements IDisplayView, IHandlerInput<T[]> {
+
     private final Scanner scanner;
-    private final String select;
-    private final Integer length;
+    private Integer length;
+    private final Function<String[], T> creator;
+    private final Type type;
 
-    public InputDataCommand(Scanner scanner, String select, Integer length) {
+    public InputDataCommand(Scanner scanner, Function<String[], T> creator, Type type) {
         this.scanner = scanner;
-        this.select = select;
-        this.length = length;
+        this.creator = creator;
+        this.type = type;
+    }
+
+    public void setLength(int value) {
+        this.length = value;
     }
 
     @Override
-    public String execute() {
+    public void displayView() {
+        this.tablePrint(null);
+    }
+
+    @Override
+    public T[] handlerInput() {
         var count = 0;
-        StringBuilder data = new StringBuilder();
+
+        T[] types = (T[]) new Object[this.length];
+
         do {
-            System.out.println(this.select);
             var rawData = scanner.nextLine();
-            data.append(rawData).append("\n").append("<===========>\n");
-           
+            System.out.print(rawData);
+            var d = rawData.split(" ");
+            if (d.length < 3) {
+                System.out.println("Неверный формат данных. Введите три значения.");
+                continue;
+            }
+
+            // Используем функцию для создания объекта типа T
+            types[count] = creator.apply(d);
+
+            this.clearConsole();
+            this.tablePrint(types);
+
             count++;
             if (count >= length) {
-                return data.toString();
+                return types;
             }
-            this.clearConsole();
         } while (true);
     }
 
-    // TODO
-    // private void tablePrint(StringBuilder str) {
-    //     System.out.printf("%-30s %-15s %-10s%n", "Мощность", "Модель", "Год производства");
-    //     System.out.println("------------------------------------------");
-    //     for (car : cars) {
-    //
-    //         System.out.printf("%-30s %-15d %-10s%n", object.getPower(), object.getModel(), object.getYear());
-    //     }
-    // }
+    private void tablePrint(T[] items) {
+
+        switch (this.type) {
+            case BOOK:
+                System.out.printf("%-30s %-15s %-10s%n", "Автор", "Название", "Страницы");
+
+                break;
+            case CAR:
+                System.out.printf("%-30s %-15s %-10s%n", "Мощность", "Модель", "Год");
+                break;
+            case VEGETATION:
+                System.out.printf("%-30s %-15s %-10s%n", "Тип", "Вес", "Цвет");
+                break;
+
+        }
+        System.out.println("------------------------------------------");
+
+        if (items != null) {
+            for (var item : items) {
+                if (item != null) {
+                    System.out.println(item);
+                }
+            }
+        }
+    }
 
     private void clearConsole() {
         System.out.print("\033[H\033[2J");

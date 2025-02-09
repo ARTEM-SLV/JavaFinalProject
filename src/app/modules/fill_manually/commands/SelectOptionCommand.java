@@ -1,29 +1,45 @@
 package app.modules.fill_manually.commands;
 
-import app.modules.fill_manually.NavFillManually;
-import app.modules.fill_manually.commands.interfaces.IExecuteReturnValue;
+import app.modules.fill_manually.commands.interfaces.IDisplayView;
+import app.modules.fill_manually.commands.interfaces.IHandlerInput;
+import app.modules.fill_manually.commands.types.Type;
 import java.util.Scanner;
 
-public class SelectOptionCommand implements IExecuteReturnValue<String> {
+public class SelectOptionCommand implements IDisplayView, IHandlerInput<Type> {
 
     private final Scanner scanner;
-    private final NavFillManually nav;
 
-    public SelectOptionCommand(Scanner scanner, NavFillManually nav) {
+    public SelectOptionCommand(Scanner scanner) {
         this.scanner = scanner;
-        this.nav = nav;
     }
 
     @Override
-    public String execute() {
+    public void displayView() {
+        System.out.println("""
+            Какой тип данных будем использовать?
+            1 - Автомобиль
+            2 - Книга
+            3 - Корнеплод
+            """);
+    }
+
+    @Override
+    public Type handlerInput() {
         while (true) {
             try {
-                System.out.println(this.nav.getNav().getOptionsMessage());
-                var selectOption = Integer.parseInt(scanner.nextLine());
-                var opt = this.nav.getNav().getOptions().get(selectOption);
 
-                if (opt != null) {
-                    return opt;
+                var selectOption = Integer.parseInt(scanner.nextLine());
+
+                switch (selectOption) {
+                    case 1 -> {
+                        return Type.CAR;
+                    }
+                    case 2 -> {
+                        return Type.BOOK;
+                    }
+                    case 3 -> {
+                        return Type.VEGETATION;
+                    }
                 }
 
                 this.clearConsole();

@@ -1,23 +1,25 @@
 package app.modules.fill_manually.commands;
 
-import app.modules.fill_manually.NavFillManually;
-import app.modules.fill_manually.commands.interfaces.IExecuteReturnValue;
+import app.modules.fill_manually.commands.interfaces.IDisplayView;
+import app.modules.fill_manually.commands.interfaces.IHandlerInput;
 import java.util.Scanner;
 
-public class ReadLengthCommand implements IExecuteReturnValue<Integer> {
+public class ReadLengthCommand implements IDisplayView, IHandlerInput<Integer> {
 
     private final Scanner scanner;
-    private final NavFillManually nav;
 
-    public ReadLengthCommand(Scanner scanner, NavFillManually nav) {
+    public ReadLengthCommand(Scanner scanner) {
         this.scanner = scanner;
-        this.nav = nav;
     }
 
     @Override
-    public Integer execute() {
+    public void displayView() {
+        System.out.println("Введите длину массива: ");
+    }
+
+    @Override
+    public Integer handlerInput() {
         while (true) {
-            System.out.println(nav.getNav().getFirstMessage());
             try {
                 int length = Integer.parseInt(scanner.nextLine());
                 this.clearConsole();
