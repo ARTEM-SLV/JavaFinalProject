@@ -16,7 +16,6 @@ public class FileIO {
         try (BufferedReader reader = new BufferedReader(new FileReader(filename))) {
             StringBuilder stringBuilder = new StringBuilder();
             String line;
-            String[] trimmedObjectArray = stringBuilder.toString().trim().split("\n");
             while ((line = reader.readLine()) != null) {
                 //Если строка не пустая, добавляем ее к буферу StringBuilder
                 if (!line.trim().isEmpty()) {
@@ -31,13 +30,13 @@ public class FileIO {
                     Десериализуем строку в объект.
                     Записываем объект в массив.
                      */
-                    array[index++] = ObjectSerializer.deserialize(trimmedObjectArray);
+                    array[index++] = ObjectSerializer.deserialize(stringBuilder.toString().trim().split("\n"));
                     stringBuilder.setLength(0); // Очищаем буфер строки под следующий объект
                 }
             }
             // Десериализовать последний объект если конец файла не пустая строка
             if (!stringBuilder.isEmpty()) {
-                array[index] = ObjectSerializer.deserialize(trimmedObjectArray);
+                array[index] = ObjectSerializer.deserialize(stringBuilder.toString().trim().split("\n"));
             }
         } catch (IOException e) {
             System.err.println("Ошибка чтения объектов из файла: " + e.getMessage());
