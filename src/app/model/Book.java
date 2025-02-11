@@ -53,4 +53,8 @@ public class Book implements Serializable {
     public String toString() {
         return "Book, " + "Автор: " + author + ", " + "Название: " + name + ", " + "Страниц: " + pageCount;
     }
+
+    public String toStringTable() {
+        return String.format("%-30s %-15s %-10s", author, name, pageCount);
+    }
 }
