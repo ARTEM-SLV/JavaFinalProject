@@ -3,8 +3,6 @@ package app.modules.router.routes;
 import app.modules.router.ExitException;
 import app.modules.router.IRoute;
 
-import java.util.Scanner;
-
 public class RouteReadFile implements IRoute {
     @Override
     public void render() {
@@ -12,7 +10,7 @@ public class RouteReadFile implements IRoute {
     }
 
     @Override
-    public void execute(Scanner scanner) throws ExitException {
+    public void execute(String args) throws ExitException {
         throw new ExitException("EXIT");
     }
 }

@@ -1,14 +1,12 @@
 package app.modules.router.routes;
 
-import app.modules.router.EnumRoutes;
-import app.modules.router.IRoute;
+import app.modules.router.BaseRoute;
 import app.modules.router.Router;
 import app.utility.FileIO;
 
 import java.io.*;
-import java.util.Scanner;
 
-public class RouteWriteToFile implements IRoute {
+public class RouteWriteToFile extends BaseRoute {
     private final Router router;
 
     public RouteWriteToFile(Router router) {
@@ -21,8 +19,13 @@ public class RouteWriteToFile implements IRoute {
     }
 
     @Override
-    public void execute(Scanner scanner) {
-        var data = this.router.getContext().Data;
+    public void execute(String args) throws Exception{
+        var data = this.router.getState().Data;
+
+        if (data == null || data.length < 1) {
+            throw new Exception("Массив пуст");
+        }
+
         try {
             Serializable[] serializableData = new Serializable[data.length];
 
@@ -32,7 +35,7 @@ public class RouteWriteToFile implements IRoute {
 
             FileIO.write("output.txt", serializableData);
 
-            this.router.navigateTo(EnumRoutes.MENU);
+            this.router.navigateToPath(this.pathToRoute);
         } catch (Exception e) {
             System.out.println("Ошибка>>RouteWriteToFile");
        }

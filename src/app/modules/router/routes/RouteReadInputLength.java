@@ -1,15 +1,13 @@
 package app.modules.router.routes;
 
-import app.modules.router.EnumRoutes;
-import app.modules.router.IRoute;
+import app.modules.router.BaseRoute;
 import app.modules.router.Router;
 
-import java.util.Scanner;
-
-public class RouteReadInputLength implements IRoute {
+public class RouteReadInputLength extends BaseRoute {
     private final Router router;
 
     public RouteReadInputLength(Router router) {
+        super("InputLength");
         this.router = router;
     }
 
@@ -19,14 +17,12 @@ public class RouteReadInputLength implements IRoute {
     }
 
     @Override
-    public void execute(Scanner scanner) throws NumberFormatException {
-        if (!scanner.hasNextInt()) {
-            scanner.next();
+    public void execute(String args) throws NumberFormatException {
+        if (!this.isNumberString(args)) {
             throw new NumberFormatException("Ошибка: Введите число, а не строку. Попробуйте снова.");
         }
 
-        this.router.getContext().Length = Integer.parseInt(scanner.nextLine());
-        this.router.navigateTo(EnumRoutes.OPTIONS);
-
+        this.router.getState().Length = Integer.parseInt(args);
+        this.router.navigateTo(this.pathToRoute);
     }
 }

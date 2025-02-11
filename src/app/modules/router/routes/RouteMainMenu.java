@@ -1,41 +1,36 @@
 package app.modules.router.routes;
 
-import app.modules.router.EnumRoutes;
-import app.modules.router.IRoute;
+import app.modules.router.BaseRoute;
 import app.modules.router.Router;
 
-import java.util.InputMismatchException;
-import java.util.Scanner;
-
-public class RouteMainMenu implements IRoute {
+public class RouteMainMenu extends BaseRoute {
     private final Router router;
 
     public RouteMainMenu(Router router) {
+        super("RouteMainMenu");
         this.router = router;
     }
 
     @Override
     public void render() {
         System.out.println("""
-                1 - Считать с файла
                 2 - Ручной ввод
-                0 - Выход из программы
+                3 - Рандом
+                exit - Выход из программы
                 """);
     }
 
     @Override
-    public void execute(Scanner scanner) throws NumberFormatException {
-        if (!scanner.hasNextInt()) {
-            scanner.next();
+    public void execute(String args) throws NumberFormatException {
+        if (!this.isNumberString(args)) {
             throw new NumberFormatException("Ошибка: Введите число, а не строку. Попробуйте снова.");
         }
 
-        var value = scanner.nextInt();
+        var value = Integer.parseInt(args);
 
         switch (value) {
-            case 1 -> this.router.navigateTo(EnumRoutes.WRITE_FILE);
-            case 2 -> this.router.navigateTo(EnumRoutes.LENGTH);
-            case 0 -> this.router.navigateTo(EnumRoutes.EXIT);
+            case 2 -> this.router.navigateToPath("/fill-manually");
+            case 3 -> this.router.navigateToPath("/random");
             default -> throw new NumberFormatException("Такой команды не существует.");
         }
     }

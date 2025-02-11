@@ -1,13 +1,8 @@
 package app.modules.router.routes;
 
-import app.modules.router.EnumRoutes;
-import app.modules.router.IRoute;
-import app.modules.router.OptionsType;
-import app.modules.router.Router;
+import app.modules.router.*;
 
-import java.util.Scanner;
-
-public class RouteOptions implements IRoute {
+public class RouteOptions extends BaseRoute {
     private final Router router;
 
     public RouteOptions(Router router) {
@@ -25,26 +20,24 @@ public class RouteOptions implements IRoute {
     }
 
     @Override
-    public void execute(Scanner scanner) {
-        if (!scanner.hasNextInt()) {
-            scanner.next();
+    public void execute(String args) {
+        if (!this.isNumberString(args)) {
             throw new NumberFormatException("Ошибка: Введите число, а не строку. Попробуйте снова.");
         }
 
-        var selectOption = Integer.parseInt(scanner.nextLine().trim());
+        var selectOption = Integer.parseInt(args.trim());
 
         switch (selectOption) {
             case 1 -> {
-                this.router.getContext().optionsType = OptionsType.CAR;
+                this.router.getState().optionsType = OptionsType.CAR;
             }
             case 2 -> {
-                this.router.getContext().optionsType = OptionsType.BOOK;
+                this.router.getState().optionsType = OptionsType.BOOK;
             }
             case 3 -> {
-                this.router.getContext().optionsType = OptionsType.VEGETATION;
+                this.router.getState().optionsType = OptionsType.VEGETATION;
             }
         }
-
-        this.router.navigateTo(EnumRoutes.INPUT_DATA);
+        this.router.navigateTo(this.pathToRoute);
     }
 }

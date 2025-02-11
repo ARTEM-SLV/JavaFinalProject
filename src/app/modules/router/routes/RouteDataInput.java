@@ -1,17 +1,11 @@
 package app.modules.router.routes;
 
-import app.modules.router.EnumRoutes;
-import app.modules.router.records.ITableToString;
-import app.modules.router.records.RecordBook;
-import app.modules.router.records.RecordCar;
-import app.modules.router.records.RecordVegetation;
-import app.modules.router.IRoute;
-import app.modules.router.OptionsType;
-import app.modules.router.Router;
+import app.model.Book;
+import app.model.Car;
+import app.model.Vegetable;
+import app.modules.router.*;
 
-import java.util.Scanner;
-
-public class RouteDataInput implements IRoute {
+public class RouteDataInput extends BaseRoute {
     private final Router router;
 
     private Object[] objects; // Массив для хранения объектов
@@ -23,73 +17,54 @@ public class RouteDataInput implements IRoute {
 
     @Override
     public void render() {
-        this.tablePrint(this.router.getContext().optionsType, this.objects);
+        this.tablePrint(this.router.getState().optionsType, this.objects);
     }
 
     @Override
-    public void execute(Scanner scanner) throws Exception {
-        var rawData = scanner.nextLine();
-        var len = this.router.getContext().Length;
-        var selectOptions = this.router.getContext().optionsType;
+    public void execute(String args) throws Exception {
+        var selectOptions = this.router.getState().optionsType;
+        var rawData = this.validationArgs(args, selectOptions);
+
+        var len = this.router.getState().Length;
+
 
         if (this.objects == null) {
-            this.objects = new Object[len];
+           this.objects = new Object[len];
         }
 
         if (this.step >= len) {
-            this.router.getContext().Data = this.objects;
-            this.router.navigateTo(EnumRoutes.WRITE_FILE);
+            this.router.getState().Data = this.objects;
+            this.router.navigateTo(this.pathToRoute);
+            this.step = 0;
             return;
-        }
-
-
-        var d = rawData.split(" ");
-
-        if (d.length < 3) {
-            throw new Exception("Неверный формат данных. Введите три значения.");
-        }
+       }
 
         switch (selectOptions) {
-            case CAR -> this.objects[step] = new RecordCar(d[0], d[1], d[2]);
-            case BOOK -> this.objects[step] = new RecordBook(d[0], d[1], d[2]);
-            case VEGETATION -> this.objects[step] = new RecordVegetation(d[0], d[1], d[2]);
+            case CAR -> {
+                this.objects[step] = new Car.CarBuilder()
+                        .model(rawData[0])
+                        .power(Integer.parseInt(rawData[1]))
+                        .year(Integer.parseInt(rawData[2]))
+                        .build();
+            }
+            case BOOK -> {
+                this.objects[step] = new Book.BookBuilder()
+                        .author(rawData[0])
+                        .name(rawData[1])
+                        .pageCount(Integer.parseInt(rawData[1]))
+                        .build();
+            }
+            case VEGETATION -> {
+                this.objects[step] = new Vegetable.VegetableBuilder()
+                        .type(rawData[0])
+                        .weight(Double.parseDouble(rawData[1]))
+                        .color(rawData[2])
+                        .build();
+            }
         }
 
         this.step++;
     }
-
-//    @Override
-//    public void execute() {
-//        var len = this.router.getContext().Length;
-//        var selectOptions = this.router.getContext().optionsType;
-//
-//        Object[] objects = new Object[len];
-//        var step = 0;
-//
-//        do {
-//            var rawData = scanner.nextLine();
-//            var d = rawData.split(" ");
-//            if (d.length < 3) {
-//               System.out.println("Неверный формат данных. Введите три значения.");
-//               break;
-//            }
-//
-//            switch (selectOptions) {
-//                case CAR -> objects[step] = new RecordCar(d[0], d[1], d[2]);
-//                case BOOK -> objects[step] = new RecordBook(d[0], d[1], d[2]);
-//                case VEGETATION -> objects[step] = new RecordVegetation(d[0], d[1], d[2]);
-//            }
-//            this.clearConsole();
-//            this.tablePrint(selectOptions, objects);
-//            step++;
-//            if (step >= len) {
-//                this.router.getContext().Data = objects;
-//                this.router.navigateTo("select/out/file");
-//                break;
-//            }
-//        } while (true);
-//
-//    }
 
     private void tablePrint(OptionsType type, Object[] items) {
 
@@ -98,7 +73,7 @@ public class RouteDataInput implements IRoute {
                 System.out.printf("%-30s %-15s %-10s%n", "Автор", "Название", "Страницы");
                 break;
             case CAR:
-                System.out.printf("%-30s %-15s %-10s%n", "Мощность", "Модель", "Год");
+                System.out.printf("%-30s %-15s %-10s%n", "Модель", "Мощность" , "Год");
                 break;
             case VEGETATION:
                 System.out.printf("%-30s %-15s %-10s%n", "Тип", "Вес", "Цвет");
@@ -109,18 +84,60 @@ public class RouteDataInput implements IRoute {
 
         if (items != null) {
             for (var item : items) {
-                if (item != null) {
-                    if (item instanceof ITableToString) {
-                        System.out.println(((ITableToString) item).toStringTable());
+                if(item == null) return;
+                switch (type) {
+
+                    case CAR -> {
+                        Car car = (Car) item;
+                        System.out.printf("%-30s %-15d %-10d%n", car.getModel(), car.getPower(), car.getYear());
+                    }
+                    case BOOK -> {
+                        Book book = (Book) item;
+                        System.out.printf("%-30s %-15s %-10s%n", book.getAuthor(), book.getName(), book.getPageCount());
+                    }
+                    case VEGETATION -> {
+                        Vegetable vegetable = (Vegetable) item;
+                        System.out.printf("%-30s %-15s %-10s%n", vegetable.getType(), vegetable.getWeight(), vegetable.getColor());
                     }
                 }
+
             }
         }
     }
 
+    private String[] validationArgs(String args, OptionsType type) throws Exception {
+        var items = args.split(",\\s*");
 
-    private void clearConsole() {
-        System.out.print("\033[H\033[2J");
-        System.out.flush();
+        if (items.length != 3) {
+            switch (type) {
+                case BOOK ->
+                        throw new Exception("Неверный формат данных. author - строка, name - Строка, pages - Число ");
+                case CAR -> throw new Exception("Неверный формат данных. Мощность - Число, Модель - Строка, Год - Число");
+                case VEGETATION ->
+                        throw new Exception("Неверный формат данных. Тип - Строка, Вес - Число, Цвет - Строка");
+            }
+        }
+
+
+        switch (type) {
+            case BOOK -> {
+                if(this.isNumberString(items[0]) || this.isNumberString(items[1]) || !this.isNumberString(items[2])) {
+                    throw new Exception("Неверный формат данных. Автор - Строка, Название - Строка, pages - Число");
+                }
+            }
+            case CAR -> {
+                if (this.isNumberString(items[0]) || !this.isNumberString(items[1]) || !this.isNumberString(items[2])) {
+                    throw new Exception("Неверный формат данных. Модель - Строка, Мощность - Число, Год - Число");
+                }
+            }
+            case VEGETATION -> {
+                var check = this.isNumberString(items[0]) || !this.isNumberString(items[1]) || this.isNumberString(items[2]);
+                if(check) {
+                    throw new Exception("Неверный формат данных. Тип - Строка, Вес - Число, Цвет - Строка");
+                }
+            }
+        }
+
+        return items;
     }
 }

@@ -1,60 +1,112 @@
 package app.modules.router;
+import app.modules.router.state.State;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Scanner;
 
 public class Router {
-    private final Map<EnumRoutes, IRoute> commands = new HashMap<>();
-    private IRoute curCommand;
-    private final Context context = new Context();
-    private final Scanner scanner;
+    private final String path;
+    private final Map<String, BaseRoute> routes = new HashMap<>();
+    private final Map<String, Router> groupRouter = new HashMap<>();
+    private Router headRouter;
+    private BaseRoute currRoute;
+    private State state;
 
-    public Router(Scanner sc) {
-        this.scanner = sc;
+    public Router(String path) {
+        this.path = path;
     }
 
-    public Context getContext() {
-        return this.context;
+    public void setState(State state) {
+        this.state = state;
     }
 
-    public void addCommand(EnumRoutes name, IRoute command) {
-        if (this.curCommand == null) this.curCommand = command;
-        this.commands.put(name, command);
+    public String getPath() {
+        return this.path;
     }
-    private Boolean isRun = true;
-    public void navigateTo(EnumRoutes name) {
+
+    private Router getHeadRouter() {
+        return this.headRouter;
+    }
+
+    public void addToGroupRouter(String path, Router router) {
+        this.groupRouter.put(path, router);
+        router.headRouter = this;
+        router.state = this.state;
+    }
+
+    public Router getRouter() {
+        return this;
+    }
+
+    public State getState() {
+        return this.state;
+    }
+
+    private Map<String, Router> getGroupRouter() {
+        return this.groupRouter;
+    }
+
+    private Router getRouterByGroup(String path) {
+        return this.groupRouter.get(path);
+    }
 
 
-        while (this.isRun) {
-            try {
-                if (!this.commands.containsKey(name)) return;
-                this.curCommand = this.commands.get(name);
-
-                this.clearDisplay();
-                this.curCommand.render();
-                this.curCommand.execute(this.scanner);
-
-            } catch (NumberFormatException e) {
-                System.out.println(e.getMessage());
-            } catch (Exception e) {
-                if (e instanceof ExitException) {
-                    System.out.println(e.getMessage());
-                    this.isRun = false;
-                    break;
-                }
-                System.out.println("Произошла ошибка: " + e.getMessage());
-            }
+    public void navigateToPath(String path) {
+        // Если путь существует в groupRouter
+        if (this.groupRouter.containsKey(path)) {
+            Router targetRouter = this.groupRouter.get(path);
+            this.currRoute = targetRouter.currRoute;
+//            this.headRouter = targetRouter;
+            targetRouter.headRouter = this; // Устанавливаем обратную ссылку
+            return; // Выходим, так как нашли маршрут
         }
+
+        // Если текущий путь совпадает с запрошенным
+        if (this.path.equals(path)) {
+            this.currRoute = this.routes.get(path);
+            return; // Выходим, так как нашли маршрут
+        }
+
+        // Если headRouter существует и его путь совпадает с запрошенным
+        if (this.headRouter != null && this.headRouter.path.equals(path)) {
+            this.headRouter.currRoute = this.headRouter.routes.get(path);
+            return; // Выходим, так как нашли маршрут
+        }
+
+        System.out.println("Маршрут не найден: " + path);
     }
 
-    public void process() {
-        if (this.curCommand == null) return;
-        this.navigateTo(EnumRoutes.MENU);
+    public void addRoute(String name, BaseRoute route) {
+        if (this.currRoute == null) {
+            this.currRoute = route;
+        }
+        this.routes.put(name, route);
     }
 
-    private void clearDisplay() {
-        System.out.print("\033[H\033[2J");
-        System.out.flush();
+    public void navigateTo(String path) {
+        if (!this.routes.containsKey(path)) return;
+        var getRoute = this.routes.get(path);
+        this.headRouter.currRoute = getRoute;
+    }
+
+    public void start() {
+        this.currRoute.render();
+    }
+
+    public void process(String args) throws Exception {
+        if (this.currRoute == null) return;
+        this.currRoute.execute(args);
+    }
+
+    public String getFullPath() {
+        StringBuilder fullPath = new StringBuilder(this.path);
+        Router current = this;
+
+        while (current.getHeadRouter() != null) {
+            current = current.getHeadRouter();
+            fullPath.insert(0, current.getPath() + "/" + this.currRoute.getName());
+        }
+
+        return fullPath.toString();
     }
 }
