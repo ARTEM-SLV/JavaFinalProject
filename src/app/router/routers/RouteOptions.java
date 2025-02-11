@@ -43,6 +43,7 @@ public class RouteOptions implements IRoute {
     private void sendMsgMenu(){
         System.out.println("");
         System.out.println("""
+                Основное меню:
                 1 - Считать с файла
                 2 - Ручной ввод
                 0 - Выход из программы
@@ -95,17 +96,14 @@ public class RouteOptions implements IRoute {
             case 2 -> this.router.getContext().optionsType = OptionsType.BOOK;
             case 3 -> this.router.getContext().optionsType = OptionsType.VEGETATION;
             case 0 -> {
-                this.router.step = StepsRouter.MENU;
+                this.router.setStepMenu();
                 return;
             }
             default -> throw new NumberFormatException("Такой команды не существует!");
         }
 
-        RouteSort<Object> routeSort = new RouteSort<>(this.router);
-        RouteSearch<Object> routeSearch = new RouteSearch<>(this.router);
-
-        this.router.addCommand(StepsRouter.SORT, routeSort);
-        this.router.addCommand(StepsRouter.SEARCH, routeSearch);
+        this.router.addCommand(StepsRouter.SORT, new RouteSort<>(this.router));
+        this.router.addCommand(StepsRouter.SEARCH,  new RouteSearch<>(this.router));
 
         this.router.step = StepsRouter.INPUT_DATA;
     }
