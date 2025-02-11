@@ -32,7 +32,7 @@ public class RouteWriteToFile implements IRoute {
 
             FileIO.write("output.txt", serializableData);
 
-            this.router.step = StepsRouter.MENU;
+            this.router.setStepMenu();
         } catch (Exception e) {
             System.out.println("Ошибка>>RouteWriteToFile");
        }
