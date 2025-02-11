@@ -54,4 +54,8 @@ public class Vegetable implements Serializable {
     public String toString() {
         return "Vegetable, " + "Тип: " + type + ", " + "Вес: " + weight + ", " + "Цвет: " + color;
     }
+
+    public String toStringTable() {
+        return String.format("%-30s %-15s %-10s", type, weight, color);
+    }
 }

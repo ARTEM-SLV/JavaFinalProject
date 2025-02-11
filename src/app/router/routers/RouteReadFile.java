@@ -1,7 +1,7 @@
-package app.modules.router.routes;
+package app.router.routers;
 
-import app.modules.router.ExitException;
-import app.modules.router.IRoute;
+import app.router.ExitException;
+import app.router.IRoute;
 
 import java.util.Scanner;
 

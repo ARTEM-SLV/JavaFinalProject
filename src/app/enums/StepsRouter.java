@@ -1,11 +1,13 @@
-package app.modules.router;
+package app.enums;
 
-public enum EnumRoutes {
+public enum StepsRouter {
     MENU,
     LENGTH,
     OPTIONS,
     INPUT_DATA,
     READ_FILE,
     WRITE_FILE,
+    SORT,
+    SEARCH,
     EXIT,
 }

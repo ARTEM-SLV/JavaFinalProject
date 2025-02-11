@@ -1,8 +1,8 @@
-package app.modules.router.routes;
+package app.router.routers;
 
-import app.modules.router.EnumRoutes;
-import app.modules.router.IRoute;
-import app.modules.router.Router;
+import app.enums.StepsRouter;
+import app.router.IRoute;
+import app.router.Router;
 import app.utility.FileIO;
 
 import java.io.*;
@@ -32,7 +32,7 @@ public class RouteWriteToFile implements IRoute {
 
             FileIO.write("output.txt", serializableData);
 
-            this.router.navigateTo(EnumRoutes.MENU);
+            this.router.step = StepsRouter.MENU;
         } catch (Exception e) {
             System.out.println("Ошибка>>RouteWriteToFile");
        }
