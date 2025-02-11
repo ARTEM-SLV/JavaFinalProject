@@ -55,4 +55,8 @@ public class Car implements Serializable {
     public String toString() {
         return "Car, " + "Мощность: " + power + "," + "Марка: " + model + "," + "Год выпуска: " + year;
     }
+
+    public String toStringTable() {
+        return String.format("%-30s %-15s %-10s", power, model, year);
+    }
 }

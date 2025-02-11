@@ -1,4 +1,4 @@
-package app.modules.router;
+package app.router;
 
 public class ExitException extends Exception {
     public ExitException(String message) {
