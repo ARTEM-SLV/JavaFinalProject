@@ -45,12 +45,12 @@ public class Main {
         Arrays.stream(cars)
                 .forEach(System.out::println);
 
-        Comparator carComparator = UniversalComparator.getComparator(OptionsType.CAR);
+//        Comparator carComparator = UniversalComparator.getComparator(OptionsType.CAR);
 
-        IExecutor<Car> IExecutor = new Executor<>();
-        IExecutor.sort(cars, sorter, carComparator);
+        IExecutor<Car> IExecutor = new Executor<>(OptionsType.CAR);
+        IExecutor.sort(cars, sorter);
         Car car = new Car.CarBuilder().power(200).model("BMW").year(2020).build();
-        IExecutor.search(cars, searcher, carComparator, car);
+        IExecutor.search(cars, searcher, car);
     }
 
     private static Car[] createCars(){
