@@ -36,7 +36,6 @@ public class RandomInput {
         return vegetables;
     }
 
-
     public Book generateRandomBook(){
         return new Book.BookBuilder()
                 .author(randomString(7))

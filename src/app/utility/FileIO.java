@@ -4,6 +4,12 @@ import java.io.*;
 
 public class FileIO {
 
+    /**
+     * Чтение из файла
+     *
+     * @param filename - имя файла включая расширение
+     * @return массив объектов реализующих Serializable
+     */
     public static Serializable[] read(String filename) {
 
         replaceMultipleNewlines(filename);
@@ -16,7 +22,6 @@ public class FileIO {
         try (BufferedReader reader = new BufferedReader(new FileReader(filename))) {
             StringBuilder stringBuilder = new StringBuilder();
             String line;
-            String[] trimmedObjectArray = stringBuilder.toString().trim().split("\n");
             while ((line = reader.readLine()) != null) {
                 //Если строка не пустая, добавляем ее к буферу StringBuilder
                 if (!line.trim().isEmpty()) {
@@ -31,13 +36,13 @@ public class FileIO {
                     Десериализуем строку в объект.
                     Записываем объект в массив.
                      */
-                    array[index++] = ObjectSerializer.deserialize(trimmedObjectArray);
+                    array[index++] = ObjectSerializer.deserialize(stringBuilder.toString().trim().split("\n"));
                     stringBuilder.setLength(0); // Очищаем буфер строки под следующий объект
                 }
             }
             // Десериализовать последний объект если конец файла не пустая строка
             if (!stringBuilder.isEmpty()) {
-                array[index] = ObjectSerializer.deserialize(trimmedObjectArray);
+                array[index] = ObjectSerializer.deserialize(stringBuilder.toString().trim().split("\n"));
             }
         } catch (IOException e) {
             System.err.println("Ошибка чтения объектов из файла: " + e.getMessage());
@@ -70,9 +75,15 @@ public class FileIO {
         return 0;
     }
 
-    // Запись в файл
-    public static void write(String filename, Serializable... objects) {
-        try (BufferedWriter writer = new BufferedWriter(new FileWriter(filename, true))) {
+    /**
+     * Запись в файл.
+     *
+     * @param filename - имя файла включая расширение
+     * @param AddOrUpdateFile - True: добавить к файлу. False: заменить файл полностью.
+     * @param objects объект реализующий интерфейс Serializable или массив таких объектов
+     */
+    public static void write(String filename,  boolean AddOrUpdateFile, Serializable... objects) {
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(filename, AddOrUpdateFile))) {
             writer.newLine();
             writer.newLine();
 
