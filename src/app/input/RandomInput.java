@@ -12,8 +12,6 @@ public class RandomInput {
 
     private static final String[] COLORS = {"Black", "White", "Green", "Yellow"};
 
-
-
     public Book[] generateRandomBook(int count){
         Book[] books = new Book[count];
         for (int i = 0; i < books.length; i++) {

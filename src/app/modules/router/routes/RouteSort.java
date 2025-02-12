@@ -4,9 +4,10 @@ import app.model.Book;
 import app.model.Car;
 import app.model.Vegetable;
 import app.modules.router.BaseRoute;
-import app.modules.router.Router;
-import app.sort.ShellSort;
 
+import app.modules.router.Router;
+
+import app.sort.ShellSort;
 
 import java.util.Comparator;
 
@@ -48,8 +49,9 @@ public class RouteSort extends BaseRoute {
     @Override
     public void execute(String args) throws Exception {
         var data = this.router.getState().Data;
+        var selectOptionType = this.router.getState().optionsType;
 
-        switch (this.router.getState().optionsType) {
+        switch (selectOptionType) {
             case BOOK: {
                 ShellSort<Book> sort = new ShellSort<>();
                 var books = (Book[]) data;
@@ -57,13 +59,16 @@ public class RouteSort extends BaseRoute {
                 break;
             }
             case CAR: {
-                ShellSort<Car> sort = new ShellSort<>();
+
+
                 if (data instanceof Car[]) {
-                    sort.sort((Car[])data, new CarComparator());
+                    ShellSort<Car> sort = new ShellSort<>();
+                    var books = (Car[]) data;
+                    sort.sort(books, new CarComparator());
                 }
                 break;
             }
-            case VEGETATION: {
+            case VEGETABLE: {
                 ShellSort<Vegetable> sort = new ShellSort<>();
                 var car = (Vegetable[]) data;
                 sort.sort(car, new VegetableComparator());
