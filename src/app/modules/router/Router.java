@@ -52,7 +52,7 @@ public class Router {
     }
 
 
-    public void navigateToPath(String path) {
+    public void navigateToRouterPath(String path) {
         // Если путь существует в groupRouter
         if (this.groupRouter.containsKey(path)) {
             Router targetRouter = this.groupRouter.get(path);
@@ -92,7 +92,6 @@ public class Router {
         } else {
             this.headRouter.currRoute = getRoute;
         }
-
     }
 
     public void start() {
