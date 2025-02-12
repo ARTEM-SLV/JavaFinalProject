@@ -1,40 +1,15 @@
 package app;
 
-import app.enums.StepsRouter;
-import app.enums.OptionsType;
-import app.model.Car;
-import app.router.Router;
-import app.router.routers.*;
-import app.search.BinarySearch;
-import app.search.Searcher;
-import app.service.IExecutor;
-import app.service.UniversalComparator;
-import app.service.Executor;
-import app.sort.ShellSort;
-import app.sort.Sorter;
-
-import java.util.Arrays;
-import java.util.Comparator;
-import java.util.Scanner;
+import app.modules.router.ConsolePort;
+import app.modules.router.RouterCreateFactory;
+import app.modules.router.state.State;
 
 public class Main {
     public static void main(String[] args) {
-        startRouter();
-
-//        testSortAndSearch();
-    }
-
-    private static void startRouter(){
-        try(Scanner scanner = new Scanner(System.in)) {
-            var newRouter = new Router(scanner);
-            newRouter.addCommand(StepsRouter.LENGTH, new RouteReadInputLength(newRouter));
-            newRouter.addCommand(StepsRouter.OPTIONS, new RouteOptions(newRouter));
-            newRouter.addCommand(StepsRouter.INPUT_DATA, new RouteDataInput(newRouter));
-            newRouter.addCommand(StepsRouter.WRITE_FILE, new RouteWriteToFile(newRouter));
-            newRouter.addCommand(StepsRouter.EXIT, new RouteExit());
-
-            newRouter.process();
-        }
+        var state = new State();
+        var mainRouter = RouterCreateFactory.MainRouter.create(state);
+        var consolePort = new ConsolePort();
+        consolePort.process(mainRouter);
     }
 
     private static void testSortAndSearch(){
