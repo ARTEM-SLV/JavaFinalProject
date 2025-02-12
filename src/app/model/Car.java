@@ -1,6 +1,8 @@
 package app.model;
 
-public class Car {
+import java.io.Serializable;
+
+public class Car implements Serializable {
     private Integer power;
     private String model;
     private Integer year;
@@ -10,6 +12,7 @@ public class Car {
         this.model = model;
         this.year = year;
     }
+
 
     public Integer getPower() {
         return power;
@@ -23,35 +26,37 @@ public class Car {
         return year;
     }
 
-    public String toString(){
-        return "Car{" + "power=" + power + ", model='" + model + '\'' + ", year=" + year + '}';
-    }
-
-    public static class CarBuilder{
+    public static class CarBuilder {
         private Integer power;
         private String model;
         private Integer year;
 
-        public CarBuilder power(Integer power)
-        {
+        public CarBuilder power(Integer power) {
             this.power = power;
             return this;
         }
 
-        public CarBuilder model(String model)
-        {
+        public CarBuilder model(String model) {
             this.model = model;
             return this;
         }
 
-        public CarBuilder year(Integer year)
-        {
+        public CarBuilder year(Integer year) {
             this.year = year;
             return this;
         }
 
-        public Car build(){
-            return new Car(power,model,year);
+        public Car build() {
+            return new Car(power, model, year);
         }
+    }
+
+    @Override
+    public String toString() {
+        return "Car, " + "Мощность: " + power + "," + "Марка: " + model + "," + "Год выпуска: " + year;
+    }
+
+    public String toStringTable() {
+        return String.format("%-30s %-15s %-10s", power, model, year);
     }
 }

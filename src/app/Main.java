@@ -1,20 +1,43 @@
 package app;
 
-import app.enums.Classes;
+import app.enums.StepsRouter;
+import app.enums.OptionsType;
 import app.model.Car;
+import app.router.Router;
+import app.router.routers.*;
 import app.search.BinarySearch;
 import app.search.Searcher;
+import app.service.IExecutor;
+import app.service.UniversalComparator;
 import app.service.Executor;
-import app.service.UniversalExecutor;
 import app.sort.ShellSort;
 import app.sort.Sorter;
-import app.service.UniversalComparator;
 
 import java.util.Arrays;
 import java.util.Comparator;
+import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) {
+        startRouter();
+
+//        testSortAndSearch();
+    }
+
+    private static void startRouter(){
+        try(Scanner scanner = new Scanner(System.in)) {
+            var newRouter = new Router(scanner);
+            newRouter.addCommand(StepsRouter.LENGTH, new RouteReadInputLength(newRouter));
+            newRouter.addCommand(StepsRouter.OPTIONS, new RouteOptions(newRouter));
+            newRouter.addCommand(StepsRouter.INPUT_DATA, new RouteDataInput(newRouter));
+            newRouter.addCommand(StepsRouter.WRITE_FILE, new RouteWriteToFile(newRouter));
+            newRouter.addCommand(StepsRouter.EXIT, new RouteExit());
+
+            newRouter.process();
+        }
+    }
+
+    private static void testSortAndSearch(){
         Sorter<Car> sorter = new ShellSort<>();
         Searcher<Car> searcher = new BinarySearch<>();
 
@@ -22,12 +45,12 @@ public class Main {
         Arrays.stream(cars)
                 .forEach(System.out::println);
 
-        Comparator carComparator = UniversalComparator.getComparator(Classes.CAR);
+        Comparator carComparator = UniversalComparator.getComparator(OptionsType.CAR);
 
-        Executor<Car> executor = new UniversalExecutor<>();
-        executor.sort(cars, sorter, carComparator);
+        IExecutor<Car> IExecutor = new Executor<>();
+        IExecutor.sort(cars, sorter, carComparator);
         Car car = new Car.CarBuilder().power(200).model("BMW").year(2020).build();
-        executor.search(cars, searcher, carComparator, car);
+        IExecutor.search(cars, searcher, carComparator, car);
     }
 
     private static Car[] createCars(){

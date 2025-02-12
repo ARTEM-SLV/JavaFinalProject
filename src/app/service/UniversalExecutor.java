@@ -1,5 +1,6 @@
 package app.service;
 
+import app.model.Car;
 import app.search.Searcher;
 import app.sort.Sorter;
 
@@ -9,7 +10,7 @@ import java.util.Comparator;
 public class UniversalExecutor <T> implements Executor<T>{
     @Override
     public void sort(T[] arr, Sorter<T> sorter, Comparator comparator) {
-        System.out.println("\nСортировка элементов:");
+        System.out.println("\nПосле сортировки:");
 
         sorter.sort(arr, comparator);
         Arrays.stream(arr)
@@ -21,6 +22,6 @@ public class UniversalExecutor <T> implements Executor<T>{
         System.out.println("\nПоиск элемента:");
 
         int index = searcher.search(arr, element, comparator);
-        System.out.println("Результат поиска элемента: " + (index >= 0 ? "элемент найден в позиции" + index : "не найден"));
+        System.out.println("Результат поиска элемента: " + (index >= 0 ? element : "не найден"));
     }
 }
