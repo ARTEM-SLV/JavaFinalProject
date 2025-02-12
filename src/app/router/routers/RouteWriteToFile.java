@@ -23,19 +23,26 @@ public class RouteWriteToFile implements IRoute {
     @Override
     public void execute(Scanner scanner) {
         var data = this.router.getContext().Data;
-        try {
-            Serializable[] serializableData = new Serializable[data.length];
+        if (data != null && data.length > 0) {
+            try {
+                Serializable[] serializableData = new Serializable[data.length];
 
-            for (int i = 0; i < data.length; i++) {
-                serializableData[i] = (Serializable) data[i];
+                for (int i = 0; i < data.length; i++) {
+                    serializableData[i] = (Serializable) data[i];
+                }
+
+                FileIO.write("output.txt", false, serializableData);
+
+            } catch (Exception e) {
+                System.out.println("Ошибка>>RouteWriteToFile");
             }
-
-            // TODO: 12.02.2025 поправить сохранение в файл 
-//            FileIO.write("output.txt", serializableData);
-
+            finally {
+               this.router.setStepMenu();
+            }
+        }
+        else {
+            System.out.println("Нет данных для записи.");
             this.router.setStepMenu();
-        } catch (Exception e) {
-            System.out.println("Ошибка>>RouteWriteToFile");
-       }
+        }
     }
 }
