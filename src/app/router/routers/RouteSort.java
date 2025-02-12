@@ -36,8 +36,8 @@ public class RouteSort<T> implements IRoute<T> {
         Comparator comparator = UniversalComparator.getComparator(type);
 
         Sorter<T> sorter =new ShellSort<>();
-        IExecutor<T> IExecutor = new Executor<>();
-        IExecutor.sort((T[]) data, sorter, comparator);
+        IExecutor<T> IExecutor = new Executor<>(type);
+        IExecutor.sort((T[]) data, sorter);
 
         this.router.step = StepsRouter.OPTIONS;
         this.router.option = Option.SEARCH;
