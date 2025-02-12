@@ -33,7 +33,7 @@ public class RouteWriteToFile extends BaseRoute {
                 serializableData[i] = (Serializable) data[i];
             }
 
-            FileIO.write("output.txt", serializableData);
+            FileIO.write("output.txt", false, serializableData);
 
             this.router.navigateToPath(this.pathToRoute);
         } catch (Exception e) {

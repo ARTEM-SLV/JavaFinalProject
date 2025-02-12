@@ -1,6 +1,6 @@
 package app.modules.router.routes;
 
-import app.enums.Classes;
+import app.enums.OptionsType;
 import app.model.Book;
 import app.model.Car;
 import app.model.Vegetable;
@@ -55,7 +55,7 @@ public class RouteDataInput extends BaseRoute {
                         .pageCount(Integer.parseInt(rawData[1]))
                         .build();
             }
-            case VEGETABLE -> {
+            case VEGETATION -> {
                 this.objects[step] = new Vegetable.VegetableBuilder()
                         .type(rawData[0])
                         .weight(Double.parseDouble(rawData[1]))
@@ -67,7 +67,7 @@ public class RouteDataInput extends BaseRoute {
         this.step++;
     }
 
-    private void tablePrint(Classes type, Object[] items) {
+    private void tablePrint(OptionsType type, Object[] items) {
 
         switch (type) {
             case BOOK:
@@ -76,7 +76,7 @@ public class RouteDataInput extends BaseRoute {
             case CAR:
                 System.out.printf("%-30s %-15s %-10s%n", "Модель", "Мощность" , "Год");
                 break;
-            case VEGETABLE:
+            case VEGETATION:
                 System.out.printf("%-30s %-15s %-10s%n", "Тип", "Вес", "Цвет");
                 break;
 
@@ -96,7 +96,7 @@ public class RouteDataInput extends BaseRoute {
                         Book book = (Book) item;
                         System.out.printf("%-30s %-15s %-10s%n", book.getAuthor(), book.getName(), book.getPageCount());
                     }
-                    case VEGETABLE -> {
+                    case VEGETATION -> {
                         Vegetable vegetable = (Vegetable) item;
                         System.out.printf("%-30s %-15s %-10s%n", vegetable.getType(), vegetable.getWeight(), vegetable.getColor());
                     }
@@ -106,7 +106,7 @@ public class RouteDataInput extends BaseRoute {
         }
     }
 
-    private String[] validationArgs(String args, Classes type) throws Exception {
+    private String[] validationArgs(String args, OptionsType type) throws Exception {
         var items = args.split(",\\s*");
 
         if (items.length != 3) {
@@ -114,7 +114,7 @@ public class RouteDataInput extends BaseRoute {
                 case BOOK ->
                         throw new Exception("Неверный формат данных. author - строка, name - Строка, pages - Число ");
                 case CAR -> throw new Exception("Неверный формат данных. Мощность - Число, Модель - Строка, Год - Число");
-                case VEGETABLE ->
+                case VEGETATION ->
                         throw new Exception("Неверный формат данных. Тип - Строка, Вес - Число, Цвет - Строка");
             }
         }
@@ -131,7 +131,7 @@ public class RouteDataInput extends BaseRoute {
                     throw new Exception("Неверный формат данных. Модель - Строка, Мощность - Число, Год - Число");
                 }
             }
-            case VEGETABLE -> {
+            case VEGETATION -> {
                 var check = this.isNumberString(items[0]) || !this.isNumberString(items[1]) || this.isNumberString(items[2]);
                 if(check) {
                     throw new Exception("Неверный формат данных. Тип - Строка, Вес - Число, Цвет - Строка");

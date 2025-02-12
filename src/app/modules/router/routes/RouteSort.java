@@ -1,5 +1,6 @@
 package app.modules.router.routes;
 
+import app.enums.OptionsType;
 import app.model.Book;
 import app.model.Car;
 import app.model.Vegetable;
@@ -7,7 +8,10 @@ import app.modules.router.BaseRoute;
 
 import app.modules.router.Router;
 
+import app.service.Executor;
+import app.service.IExecutor;
 import app.sort.ShellSort;
+import app.sort.Sorter;
 
 import java.util.Comparator;
 
@@ -53,25 +57,27 @@ public class RouteSort extends BaseRoute {
 
         switch (selectOptionType) {
             case BOOK: {
-                ShellSort<Book> sort = new ShellSort<>();
-                var books = (Book[]) data;
-                sort.sort(books, new BookComparator());
-                break;
-            }
-            case CAR: {
-
-
-                if (data instanceof Car[]) {
-                    ShellSort<Car> sort = new ShellSort<>();
-                    var books = (Car[]) data;
-                    sort.sort(books, new CarComparator());
+                if (data instanceof Book[]) {
+                    Sorter<Book> sorter = new ShellSort<>();
+                    IExecutor<Book> IExecutor = new Executor<>(selectOptionType);
+                    IExecutor.sort((Book[]) data, sorter);
                 }
                 break;
             }
-            case VEGETABLE: {
-                ShellSort<Vegetable> sort = new ShellSort<>();
-                var car = (Vegetable[]) data;
-                sort.sort(car, new VegetableComparator());
+            case CAR: {
+                if (data instanceof Car[]) {
+                    Sorter<Car> sorter = new ShellSort<>();
+                    IExecutor<Car> IExecutor = new Executor<>(selectOptionType);
+                    IExecutor.sort((Car[]) data, sorter);
+                }
+                break;
+            }
+            case VEGETATION: {
+                if (data instanceof Vegetable[]) {
+                    Sorter<Vegetable> sorter = new ShellSort<>();
+                    IExecutor<Vegetable> IExecutor = new Executor<>(selectOptionType);
+                    IExecutor.sort((Vegetable[]) data, sorter);
+                }
                 break;
             }
         }

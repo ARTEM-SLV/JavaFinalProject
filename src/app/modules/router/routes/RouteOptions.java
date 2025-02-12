@@ -1,6 +1,6 @@
 package app.modules.router.routes;
 
-import app.enums.Classes;
+import app.enums.OptionsType;
 import app.modules.router.*;
 
 public class RouteOptions extends BaseRoute {
@@ -30,13 +30,13 @@ public class RouteOptions extends BaseRoute {
 
         switch (selectOption) {
             case 1 -> {
-                this.router.getState().optionsType = Classes.CAR;
+                this.router.getState().optionsType = OptionsType.CAR;
             }
             case 2 -> {
-                this.router.getState().optionsType = Classes.BOOK;
+                this.router.getState().optionsType = OptionsType.BOOK;
             }
             case 3 -> {
-                this.router.getState().optionsType = Classes.VEGETABLE;
+                this.router.getState().optionsType = OptionsType.VEGETATION;
             }
         }
         this.router.navigateTo(this.pathToRoute);

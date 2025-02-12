@@ -1,10 +1,9 @@
 package app.modules.router.state;
 
-import app.enums.Classes;
-import app.modules.router.OptionsType;
+import app.enums.OptionsType;
 
 public class State extends BaseState {
     public Integer Length = 0;
-    public Classes optionsType;
+    public OptionsType optionsType;
     public Object[] Data;
 }
