@@ -11,7 +11,7 @@ public class Executor<T> implements IExecutor<T> {
     private Comparator comparator;
 
     public Executor(OptionsType type) {
-        this.comparator = UniversalComparator.getComparator(type);
+        this.comparator = UniversalComparator.getComparator(type);;
     }
 
     @Override
