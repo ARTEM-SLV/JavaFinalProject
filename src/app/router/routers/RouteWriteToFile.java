@@ -30,7 +30,8 @@ public class RouteWriteToFile implements IRoute {
                 serializableData[i] = (Serializable) data[i];
             }
 
-            FileIO.write("output.txt", serializableData);
+            // TODO: 12.02.2025 поправить сохранение в файл 
+//            FileIO.write("output.txt", serializableData);
 
             this.router.setStepMenu();
         } catch (Exception e) {
