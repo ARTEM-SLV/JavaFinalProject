@@ -2,6 +2,7 @@ package app.modules.router.routes;
 
 import app.modules.router.BaseRoute;
 import app.modules.router.Router;
+import app.modules.router.exeptions.BackException;
 import app.utility.FileIO;
 
 import java.io.*;
@@ -23,7 +24,7 @@ public class RouteWriteToFile extends BaseRoute {
         var data = this.router.getState().Data;
 
         if (data == null || data.length < 1) {
-            throw new Exception("Массив пуст");
+            throw new BackException("Массив пуст");
         }
 
         try {

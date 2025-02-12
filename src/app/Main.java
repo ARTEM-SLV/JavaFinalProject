@@ -3,24 +3,32 @@ package app;
 import app.enums.StepsRouter;
 import app.enums.OptionsType;
 import app.model.Car;
+import app.modules.router.ConsolePort;
+import app.modules.router.RouterCreateFactory;
+import app.modules.router.state.State;
 import app.router.Router;
 import app.router.routers.*;
 import app.search.BinarySearch;
 import app.search.Searcher;
 import app.service.IExecutor;
-import app.service.UniversalComparator;
 import app.service.Executor;
 import app.sort.ShellSort;
 import app.sort.Sorter;
 
 import java.util.Arrays;
-import java.util.Comparator;
 import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) {
-        startRouter();
+//        startRouter();
 
+        var state = new State();
+        var testRouter = RouterCreateFactory.ConfigRouter.create(state);
+        var consolePort = new ConsolePort();
+        consolePort.process(testRouter);
+//        var mainRouter = RouterCreateFactory.MainRouter.create(state);
+//        var consolePort = new ConsolePort();
+//        consolePort.process(mainRouter);
 //        testSortAndSearch();
     }
 

@@ -1,5 +1,6 @@
 package app.modules.router;
 
+import app.modules.router.new_routes.*;
 import app.modules.router.routes.*;
 import app.modules.router.state.State;
 
@@ -25,6 +26,7 @@ public class RouterCreateFactory {
             router.addRoute("/random", new RouteRandom(router).to("/action-options"));
             router.addRoute("/action-options", new RouteActionOptions(router));
             router.addRoute("/sort", new RouteSort(router).to("/action-options"));
+            router.addRoute("/search", new RouteSearch(router).to("/root"));
             router.addRoute("/write-file", new RouteWriteToFile(router).to("/root"));
             return router;
         }
@@ -39,6 +41,23 @@ public class RouterCreateFactory {
             router.addRoute("/action-options", new RouteActionOptions(router));
             router.addRoute("/sort", new RouteSort(router).to("/action-options"));
             router.addRoute("/write-file", new RouteWriteToFile(router).to("/root"));
+            return router;
+        }
+    }
+
+    public static class ConfigRouter {
+        public static Router create(State state) {
+            var router = new Router("/root");
+            router.setState(state);
+            router.addRoute("/menu", new MenuRoute(router));
+            router.addRoute("/sort", new RouteSort(router).to("/menu"));
+            router.addRoute("/search", new RouteSearch(router).to("/menu"));
+            router.addRoute("/write-file", new RouteWriteToFile(router).to("/menu"));
+            router.addRoute("/options", new SelectTypeRoute(router).to("/menu"));
+            router.addRoute("/data-print", new DataPrintRoute(router).to("/menu"));
+            router.addRoute("/random", new RandomGenerationRoute(router).to("/menu"));
+            router.addRoute("/len", new LengthInputRoute(router).to("/menu"));
+            router.addToGroupRouter("/fill-manually", RouterCreateFactory.FillManually.create());
             return router;
         }
     }

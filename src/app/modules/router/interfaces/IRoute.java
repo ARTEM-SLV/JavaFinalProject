@@ -1,4 +1,4 @@
-package app.modules.router;
+package app.modules.router.interfaces;
 
 public interface IRoute {
     void render();

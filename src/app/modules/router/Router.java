@@ -1,4 +1,5 @@
 package app.modules.router;
+import app.modules.router.exeptions.BackException;
 import app.modules.router.state.State;
 
 import java.util.HashMap;
@@ -86,7 +87,12 @@ public class Router {
     public void navigateTo(String path) {
         if (!this.routes.containsKey(path)) return;
         var getRoute = this.routes.get(path);
-        this.headRouter.currRoute = getRoute;
+        if (this.headRouter == null) {
+            this.currRoute = getRoute;
+        } else {
+            this.headRouter.currRoute = getRoute;
+        }
+
     }
 
     public void start() {
@@ -95,16 +101,29 @@ public class Router {
 
     public void process(String args) throws Exception {
         if (this.currRoute == null) return;
-        this.currRoute.execute(args);
+        try {
+            this.currRoute.execute(args);
+        } catch (Exception e) {
+            if (e instanceof BackException) {
+                this.navigateTo("/menu");
+            }
+            throw e;
+        }
     }
 
     public String getFullPath() {
         StringBuilder fullPath = new StringBuilder(this.path);
         Router current = this;
 
-        while (current.getHeadRouter() != null) {
-            current = current.getHeadRouter();
-            fullPath.insert(0, current.getPath() + "/" + this.currRoute.getName());
+        if (current.getHeadRouter() != null) {
+            while (current.getHeadRouter() != null) {
+                current = current.getHeadRouter();
+                fullPath.insert(0, current.getPath() + "/" + this.currRoute.getName());
+            }
+        } else {
+            var pathRouter = current.getPath();
+            var nameRoute = this.currRoute.getName();
+            return pathRouter + "/" + nameRoute;
         }
 
         return fullPath.toString();

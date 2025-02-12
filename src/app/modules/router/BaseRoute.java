@@ -1,6 +1,8 @@
 package app.modules.router;
 
-public abstract class BaseRoute implements IRoute{
+import app.modules.router.interfaces.IRoute;
+
+public abstract class BaseRoute implements IRoute {
     protected String pathToRoute;
     protected String name;
 
