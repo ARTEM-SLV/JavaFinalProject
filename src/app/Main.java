@@ -23,14 +23,9 @@ public class Main {
 //        startRouter();
 
         var state = new State();
-        var testRouter = RouterCreateFactory.Add.create(state);
+        var testRouter = RouterCreateFactory.ConfigRouterNew.create(state);
         var consolePort = new ConsolePort();
         consolePort.process(testRouter);
-
-       /* var state = new State();
-        var testRouter = RouterCreateFactory.ConfigRouter.create(state);
-        var consolePort = new ConsolePort();
-        consolePort.process(testRouter);*/
 //        var mainRouter = RouterCreateFactory.MainRouter.create(state);
 //        var consolePort = new ConsolePort();
 //        consolePort.process(mainRouter);

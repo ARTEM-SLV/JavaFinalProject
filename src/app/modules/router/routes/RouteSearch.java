@@ -24,7 +24,12 @@ public class RouteSearch extends BaseRoute {
     @Override
     public void render() {
         System.out.println("Поиск");
-        System.out.println("Введите искомый объект: ");
+        var selectOptionType = this.router.getState().optionsType;
+        switch (selectOptionType) {
+            case CAR -> System.out.println("Введите искомый объект в формате: Мощность, Модель, Год");
+            case BOOK -> System.out.println("Введите искомый объект в формате: Автор, Название, Количество страниц");
+            case VEGETATION -> System.out.println("Введите искомый объект в формате: Тип, Вес, Цвет");
+        }
     }
 
     @Override
@@ -39,7 +44,69 @@ public class RouteSearch extends BaseRoute {
             throw new BackException("Тип не выбран.");
         }
 
-        search(this.router.getState().Data, selectOptionType, args);
+        int carCount = 0;
+        int bookCount = 0;
+        int vegetableCount = 0;
+
+        // Подсчет на количество автомобилей, книг и овощей
+        for (Object obj : this.router.getState().Data) {
+            if (obj instanceof Car) {
+                carCount++;
+            } else if (obj instanceof Book) {
+                bookCount++;
+            } else if (obj instanceof Vegetable) {
+                vegetableCount++;
+            }
+        }
+
+        // Создание массивов для каждого типа
+        Car[] cars = new Car[carCount];
+        Book[] books = new Book[bookCount];
+        Vegetable[] vegetables = new Vegetable[vegetableCount];
+
+        int carIndex = 0;
+        int bookIndex = 0;
+        int vegetableIndex = 0;
+
+        // Заполнение данных в соответствующие массивы
+        for (Object obj : this.router.getState().Data) {
+            if (obj instanceof Car) {
+                cars[carIndex++] = (Car) obj;
+            } else if (obj instanceof Book) {
+                books[bookIndex++] = (Book) obj;
+            } else if (obj instanceof Vegetable) {
+                vegetables[vegetableIndex++] = (Vegetable) obj;
+            }
+        }
+
+        switch (selectOptionType) {
+            case CAR -> {
+                if (cars.length > 0) {
+                    search(cars, selectOptionType, args);
+                }
+                else {
+                    System.out.println("Автомобилей нет");
+                }
+            }
+            case BOOK -> {
+                if (books.length > 0) {
+                    search(books, selectOptionType, args);
+                }
+                else {
+                    System.out.println("Книг нет");
+                }
+            }
+            case VEGETATION -> {
+                if (vegetables.length > 0) {
+                    search(vegetables, selectOptionType, args);
+                }
+                else {
+                    System.out.println("Корнеплодов нет");
+                }
+            }
+        }
+
+
         this.router.navigateTo(this.pathToRoute);
     }
 

@@ -7,7 +7,7 @@ import java.util.Map;
 
 public class Router {
     private final String path;
-    private final Map<String, BaseRoute> routes = new HashMap<>();
+    private final Map<String, BaseRoute> routers = new HashMap<>();
     private final Map<String, Router> groupRouter = new HashMap<>();
     private Router headRouter;
     private BaseRoute currRoute;
@@ -42,6 +42,10 @@ public class Router {
         return this;
     }
 
+    public Map<String, BaseRoute> getRouters() {
+        return routers;
+    }
+
     public State getState() {
         return this.state;
     }
@@ -67,13 +71,13 @@ public class Router {
 
         // Если текущий путь совпадает с запрошенным
         if (this.path.equals(path)) {
-            this.currRoute = this.routes.get(path);
+            this.currRoute = this.routers.get(path);
             return; // Выходим, так как нашли маршрут
         }
 
 //         Если headRouter существует и его путь совпадает с запрошенным
         if (this.headRouter != null && this.headRouter.path.equals(path)) {
-            this.headRouter.currRoute = this.headRouter.routes.get(path);
+            this.headRouter.currRoute = this.headRouter.routers.get(path);
             return; // Выходим, так как нашли маршрут
         }
 
@@ -84,12 +88,12 @@ public class Router {
         if (this.currRoute == null) {
             this.currRoute = route;
         }
-        this.routes.put(name, route);
+        this.routers.put(name, route);
     }
 
     public void navigateTo(String path) {
-        if (!this.routes.containsKey(path)) return;
-        var getRoute = this.routes.get(path);
+        if (!this.routers.containsKey(path)) return;
+        var getRoute = this.routers.get(path);
         if (this.headRouter == null) {
             this.currRoute = getRoute;
         } else {

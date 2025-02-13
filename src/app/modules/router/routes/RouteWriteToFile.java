@@ -42,7 +42,7 @@ public class RouteWriteToFile extends BaseRoute {
                 System.out.println("Формат имени файла: file.txt");
             }
 
-            this.router.navigateTo(this.pathToRoute);
+            this.router.navigateToRouterPath(this.pathToRoute);
         } catch (Exception e) {
             System.out.println("Ошибка записи в файл");
         }

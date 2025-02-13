@@ -22,7 +22,12 @@ public class RouteReadInputLength extends BaseRoute {
             throw new NumberFormatException("Ошибка: Введите число, а не строку. Попробуйте снова.");
         }
 
-        this.router.getState().Length = Integer.parseInt(args);
+        int length = Integer.parseInt(args);
+        if (length == 0){
+            this.router.navigateTo(this.pathBackRoute);
+            return;
+        }
+        this.router.getState().Length = length;
         this.router.navigateTo(this.pathToRoute);
     }
 }

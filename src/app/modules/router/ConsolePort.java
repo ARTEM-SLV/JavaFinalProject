@@ -11,14 +11,14 @@ public class ConsolePort {
             while (true) {
                 try {
                     router.start();
-                    String sc = scanner.nextLine();
+                    String value = scanner.nextLine();
 
-                    if (sc.equals("exit")) {
+                    if (value.equals("q")) {
                         System.out.println("EXIT");
                         System.exit(0);
                     }
 
-                    router.process(sc);
+                    router.process(value);
 
                 } catch (NumberFormatException e) {
                     System.out.println(e.getMessage());
