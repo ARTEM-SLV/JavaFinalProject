@@ -16,11 +16,12 @@ public class RouteWriteToFile extends BaseRoute {
 
     @Override
     public void render() {
-        System.out.println("Запись в файл.....");
+        System.out.println("Запись в файл.");
+        System.out.print("Введите имя файла: ");
     }
 
     @Override
-    public void execute(String args) throws Exception{
+    public void execute(String args) throws Exception {
         var data = this.router.getState().Data;
 
         if (data == null || data.length < 1) {
@@ -28,17 +29,22 @@ public class RouteWriteToFile extends BaseRoute {
         }
 
         try {
-            Serializable[] serializableData = new Serializable[data.length];
 
-            for (int i = 0; i < data.length; i++) {
-                serializableData[i] = (Serializable) data[i];
+            if (FileIO.isValidFilename(args)) {
+                Serializable[] serializableData = new Serializable[data.length];
+
+                for (int i = 0; i < data.length; i++) {
+                    serializableData[i] = (Serializable) data[i];
+                }
+
+                FileIO.write(args, false, serializableData);
+            } else {
+                System.out.println("Формат имени файла: file.txt");
             }
-
-            FileIO.write("output.txt", false, serializableData);
 
             this.router.navigateTo(this.pathToRoute);
         } catch (Exception e) {
-            System.out.println("Ошибка>>RouteWriteToFile");
-       }
+            System.out.println("Ошибка записи в файл");
+        }
     }
 }
