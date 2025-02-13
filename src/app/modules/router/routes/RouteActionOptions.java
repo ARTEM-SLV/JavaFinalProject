@@ -13,7 +13,7 @@ public class RouteActionOptions extends BaseRoute {
     @Override
     public void render() {
         System.out.println("""
-                1 - Sort
+                1 - Сортировка
                 2 - Поиск
                 3 - Записать в файл
                 """);

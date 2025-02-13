@@ -24,7 +24,12 @@ public class RouteSearch extends BaseRoute {
     @Override
     public void render() {
         System.out.println("Поиск");
-        System.out.println("Введите искомый объект: ");
+        var selectOptionType = this.router.getState().optionsType;
+        switch (selectOptionType) {
+            case CAR -> System.out.println("Введите искомый объект в формате: Мощность, Модель, Год");
+            case BOOK -> System.out.println("Введите искомый объект в формате: Автор, Название, Количество страниц");
+            case VEGETATION -> System.out.println("Введите искомый объект в формате: Тип, Вес, Цвет");
+        }
     }
 
     @Override

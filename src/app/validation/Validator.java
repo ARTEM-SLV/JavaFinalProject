@@ -6,7 +6,7 @@ import app.model.Vegetable;
 
 public class Validator {
     public static Car checkCar(String powerS,String modelS, String yearS) throws Exception {
-        int power = getValidInt(modelS);
+        int power = getValidInt(powerS);
         String model = getValidString(modelS);
         int year = getValidInt(yearS);
 
