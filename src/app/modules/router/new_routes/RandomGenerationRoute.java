@@ -9,9 +9,6 @@ import app.modules.router.Router;
 import app.modules.router.TablePrint;
 import app.modules.router.exeptions.BackException;
 
-import java.util.Arrays;
-import java.util.stream.Stream;
-
 public class RandomGenerationRoute extends BaseRoute {
 
     private final Router router;
@@ -59,17 +56,16 @@ public class RandomGenerationRoute extends BaseRoute {
 
         TablePrint.print(selectType, arr);
 
-//        for (var result : arr) {
-//            System.out.println(result);
-//        }
+        // Если массив в состоянии пустой
+        if (this.router.getState().Data == null) {
+            this.router.getState().Data = new Object[]{};
+        }
 
-//        Object[] newArr = new Object[this.router.getState().Data.length + arr.length];
-        Object[] newArr = Stream.concat(
-                this.router.getState().Data != null ? Arrays.stream(this.router.getState().Data) : Stream.empty(),
-                Arrays.stream(arr)
-        ).toArray();
-
-        this.router.getState().Data = newArr;
+        // Добавляем новые данные в состояние
+        Object[] tempArray = new Object[arr.length + this.router.getState().Data.length];
+        System.arraycopy(this.router.getState().Data, 0, tempArray, 0, this.router.getState().Data.length);
+        System.arraycopy(arr, 0, tempArray, this.router.getState().Data.length, arr.length);
+        this.router.getState().Data = tempArray;
 
         this.router.navigateTo(this.pathToRoute);
     }

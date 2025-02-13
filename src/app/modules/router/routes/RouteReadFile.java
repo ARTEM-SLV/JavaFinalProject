@@ -15,17 +15,21 @@ public class RouteReadFile extends BaseRoute {
 
     @Override
     public void render() {
-        System.out.println("Чтение из файла....");
+        System.out.println("Чтение файла.");
+        System.out.print("Введите имя файла: ");
     }
 
     @Override
     public void execute(String args) throws ExitException {
         try {
-            router.getState().Data = FileIO.read("output.txt");
+            if (FileIO.isValidFilename(args)) {
+                router.getState().Data = FileIO.read(args);
+            } else {
+                System.out.println("Формат имени файла: file.txt");
+            }
         } catch (Exception e) {
             System.out.println("Ошибка чтения из файла");
-        }
-        finally {
+        } finally {
             this.router.navigateTo(this.pathToRoute);
         }
     }

@@ -23,17 +23,15 @@ public class RouteSearch extends BaseRoute {
 
     @Override
     public void render() {
-        var printMessage = this.router.getState().optionsType == null ? "Тип не выбран." : this.router.getState().optionsType;
-        System.out.println("""
-                Поиск:
-                """ + printMessage + "\n" +  "Нажмите любую клавишу для продолжения.");
+        System.out.println("Поиск");
+        System.out.println("Введите искомый объект: ");
     }
 
     @Override
     public void execute(String args) throws Exception {
-        var data = this.router.getState().Data;
+
         var selectOptionType = this.router.getState().optionsType;
-        if (data == null || data.length < 1) {
+        if (this.router.getState().Data == null || this.router.getState().Data.length < 1) {
             throw new BackException("Массив пустой.");
         }
 
@@ -41,7 +39,7 @@ public class RouteSearch extends BaseRoute {
             throw new BackException("Тип не выбран.");
         }
 
-        search(data, selectOptionType, args);
+        search(this.router.getState().Data, selectOptionType, args);
         this.router.navigateTo(this.pathToRoute);
     }
 
@@ -51,15 +49,15 @@ public class RouteSearch extends BaseRoute {
         switch (type) {
             case CAR -> {
                 var car = Validator.checkCar(values);
-                searchByType((Car[]) data, car, type);
+                searchByType(data, car, type);
             }
             case BOOK -> {
                 var book = Validator.checkBook(values);
-                searchByType((Book[]) data, book, type);
+                searchByType(data, book, type);
             }
             case VEGETATION -> {
                 var vegetable = Validator.checkVegetable(values);
-                searchByType((Vegetable []) data, vegetable, type);
+                searchByType(data, vegetable, type);
             }
         }
 

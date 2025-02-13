@@ -1,5 +1,8 @@
-package app.modules.router.new_routes;
+package app.modules.router.routes;
 
+import app.enums.Option;
+import app.enums.OptionsType;
+import app.enums.StepsRouter;
 import app.model.Book;
 import app.model.Car;
 import app.model.Vegetable;
@@ -10,67 +13,90 @@ import app.modules.router.Router;
 import app.modules.router.exeptions.BackException;
 import app.service.Executor;
 import app.service.IExecutor;
+import app.service.UniversalComparator;
 import app.sort.ShellSort;
 import app.sort.Sorter;
 
-public class SortRoute extends BaseRoute {
+import java.io.Serializable;
+import java.util.Comparator;
+
+public class RouteSort extends BaseRoute {
     private final Router router;
 
-    public SortRoute(Router router) {
+    public RouteSort(Router router) {
         this.router = router;
     }
 
     @Override
     public void render() {
-        var type = this.router.getState().optionsType;
-        var printMessage = type == null ? "Тип не выбран." : type;
-        System.out.println("Сортировка по " + printMessage + "\n" + "Нажмите любую клавишу для продолжения.");
+        System.out.println("Сортировка.");
+        System.out.println("Нажмите любую клавишу для продолжения.");
     }
 
     @Override
     public void execute(String args) throws Exception {
-        var data = this.router.getState().Data;
-        var selectOptionType = this.router.getState().optionsType;
+        Object[] data = router.getState().Data;
 
         if (data == null || data.length < 1) {
             throw new BackException("Массив пуст.");
         }
 
-        if (selectOptionType == null) {
-            throw new BackException("Не выбран по какому типу будем сортировать.");
-        }
+        int carCount = 0;
+        int bookCount = 0;
+        int vegetableCount = 0;
 
-        switch (selectOptionType) {
-            case BOOK: {
-                if (data instanceof Book[]) {
-                    Sorter<Book> sorter = new ShellSort<>();
-                    IExecutor<Book> IExecutor = new Executor<>(selectOptionType);
-                    IExecutor.sort((Book[]) data, sorter);
-                }
-                break;
-            }
-            case CAR: {
-                if (data instanceof Car[]) {
-                    Sorter<Car> sorter = new ShellSort<>();
-                    IExecutor<Car> IExecutor = new Executor<>(selectOptionType);
-                    IExecutor.sort((Car[]) data, sorter);
-                }
-                break;
-            }
-            case VEGETATION: {
-                if (data instanceof Vegetable[]) {
-                    Sorter<Vegetable> sorter = new ShellSort<>();
-                    IExecutor<Vegetable> IExecutor = new Executor<>(selectOptionType);
-                    IExecutor.sort((Vegetable[]) data, sorter);
-                }
-                break;
+        // Подсчет на количество автомобилей, книг и овощей
+        for (Object obj : data) {
+            if (obj instanceof Car) {
+                carCount++;
+            } else if (obj instanceof Book) {
+                bookCount++;
+            } else if (obj instanceof Vegetable) {
+                vegetableCount++;
             }
         }
 
-        for (var item : data) {
-            System.out.println(item);
+        // Создание массивов для каждого типа
+        Car[] cars = new Car[carCount];
+        Book[] books = new Book[bookCount];
+        Vegetable[] vegetables = new Vegetable[vegetableCount];
+
+        int carIndex = 0;
+        int bookIndex = 0;
+        int vegetableIndex = 0;
+
+        // Заполнение данных в соответствующие массивы
+        for (Object obj : data) {
+            if (obj instanceof Car) {
+                cars[carIndex++] = (Car) obj;
+            } else if (obj instanceof Book) {
+                books[bookIndex++] = (Book) obj;
+            } else if (obj instanceof Vegetable) {
+                vegetables[vegetableIndex++] = (Vegetable) obj;
+            }
         }
+
+        //Сортировка объектов
+        this.sortArray(new Executor<>(OptionsType.CAR), cars);
+        this.sortArray( new Executor<>(OptionsType.BOOK), books);
+        this.sortArray(new Executor<>(OptionsType.VEGETATION), vegetables);
+
+
+        //Объединение массивов
+        Object[] mergedArray = new Object[data.length];
+        System.arraycopy(cars, 0, mergedArray, 0, cars.length);
+        System.arraycopy(books, 0, mergedArray, cars.length, books.length);
+        System.arraycopy(vegetables, 0, mergedArray, cars.length + books.length, vegetables.length);
+
+        //Сохранение объединенного массива в контекст
+        this.router.getState().Data = mergedArray;
 
         this.router.navigateTo(this.pathToRoute);
+    }
+
+    // Сортирует массив с помощью заданного компаратора
+    private void sortArray(IExecutor<Serializable> executor, Object[] array) {
+        Sorter<Serializable> sorter = new ShellSort<>();
+        executor.sort((Serializable[]) array, sorter);
     }
 }
