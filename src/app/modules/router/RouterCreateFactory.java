@@ -22,11 +22,12 @@ public class RouterCreateFactory {
         public static Router  create() {
             var router = new Router("/read-file");
             router.addRoute("/input-length", new RouteReadInputLength(router).to("/options"));
-            router.addRoute("/options", new RouteOptions(router).to("/read-file"));
-            router.addRoute("/read-file", new RouteReadFile(router).to("/action-options"));
-            router.addRoute("/action-options", new RouteActionOptions(router));
-            router.addRoute("/sort", new RouteSort(router).to("/action-options"));
-            router.addRoute("/search", new RouteSearch(router).to("/write-file"));
+            router.addRoute("/options", new RouteOptions(router).to("/read-file").back("/input-length"));
+            router.addRoute("/read-file", new RouteReadFile(router).to("/print_data").back("/options"));
+            router.addRoute("/print_data", new DataPrintRoute(router).to("/action-options").back("/read-file"));
+            router.addRoute("/action-options", new RouteActionOptions(router).back("/read-file"));
+            router.addRoute("/sort", new RouteSort(router).to("/action-options").back("/read-file"));
+            router.addRoute("/search", new RouteSearch(router).to("/write-file").back("/read-file"));
             router.addRoute("/write-file", new RouteWriteToFile(router).to("/root"));
 //            router.addRoute("/root", new RouteMainMenu(router));
             return router;

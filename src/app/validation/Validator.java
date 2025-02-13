@@ -53,7 +53,7 @@ public class Validator {
     }
 
     // Валидация ввода числа (int)
-    private static int getValidInt(String input) throws Exception {
+    public static int getValidInt(String input) throws Exception {
         try {
             input = input.strip();
             int value = Integer.parseInt(input);
@@ -70,7 +70,7 @@ public class Validator {
     }
 
     // Валидация ввода числа (double)
-    private static double getValidDouble(String input) throws Exception {
+    public static double getValidDouble(String input) throws Exception {
         try {
             input = input.strip();
             double value = Double.parseDouble(input);
@@ -87,7 +87,7 @@ public class Validator {
     }
 
     // Валидация ввода строки
-    private static String getValidString(String input) throws Exception {
+    public static String getValidString(String input) throws Exception {
         input = input.strip();
         if (input.isEmpty()) {
             throw new Exception("Ошибка ввода значения " + input + "! Поле не может быть пустым.");

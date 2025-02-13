@@ -17,6 +17,7 @@ public class RouteOptions extends BaseRoute {
             1 - Автомобиль
             2 - Книга
             3 - Корнеплод
+            0 - Предыдущее меню
             """);
     }
 
@@ -29,14 +30,12 @@ public class RouteOptions extends BaseRoute {
         var selectOption = Integer.parseInt(args.trim());
 
         switch (selectOption) {
-            case 1 -> {
-                this.router.getState().optionsType = OptionsType.CAR;
-            }
-            case 2 -> {
-                this.router.getState().optionsType = OptionsType.BOOK;
-            }
-            case 3 -> {
-                this.router.getState().optionsType = OptionsType.VEGETATION;
+            case 1 -> this.router.getState().optionsType = OptionsType.CAR;
+            case 2 -> this.router.getState().optionsType = OptionsType.BOOK;
+            case 3 -> this.router.getState().optionsType = OptionsType.VEGETATION;
+            case 0 -> {
+                this.router.navigateTo(this.pathBackRoute);
+                return;
             }
         }
         this.router.navigateTo(this.pathToRoute);

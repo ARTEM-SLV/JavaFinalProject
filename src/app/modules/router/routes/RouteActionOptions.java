@@ -14,8 +14,8 @@ public class RouteActionOptions extends BaseRoute {
     public void render() {
         System.out.println("""
                 1 - Сортировка
-                2 - Поиск
-                3 - Записать в файл
+                2 - Записать в файл
+                0 - Предыдущее меню
                 """);
     }
 
@@ -33,11 +33,11 @@ public class RouteActionOptions extends BaseRoute {
                     break;
                 }
                 case 2: {
-                    this.router.navigateTo("/search");
+                    this.router.navigateTo("/write-file");
                     break;
                 }
-                case 3: {
-                    this.router.navigateTo("/write-file");
+                case 0: {
+                    this.router.navigateTo(this.pathBackRoute);
                     break;
                 }
             }
