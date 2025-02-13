@@ -1,8 +1,6 @@
 package app.modules.router.routes;
 
-import app.enums.Option;
 import app.enums.OptionsType;
-import app.enums.StepsRouter;
 import app.model.Book;
 import app.model.Car;
 import app.model.Vegetable;
@@ -13,12 +11,10 @@ import app.modules.router.Router;
 import app.modules.router.exeptions.BackException;
 import app.service.Executor;
 import app.service.IExecutor;
-import app.service.UniversalComparator;
 import app.sort.ShellSort;
 import app.sort.Sorter;
 
 import java.io.Serializable;
-import java.util.Comparator;
 
 public class RouteSort extends BaseRoute {
     private final Router router;

@@ -25,7 +25,7 @@ public class RouterCreateFactory {
             router.addRoute("/options", new RouteOptions(router).to("/random"));
             router.addRoute("/random", new RouteRandom(router).to("/action-options"));
             router.addRoute("/action-options", new RouteActionOptions(router));
-            router.addRoute("/sort", new SortRoute(router).to("/action-options"));
+            router.addRoute("/sort", new RouteSort(router).to("/action-options"));
             router.addRoute("/search", new RouteSearch(router).to("/root"));
             router.addRoute("/write-file", new RouteWriteToFile(router).to("/root"));
             return router;
@@ -39,7 +39,7 @@ public class RouterCreateFactory {
             router.addRoute("/options", new RouteOptions(router).to("/data-input"));
             router.addRoute("/data-input", new RouteDataInput(router).to("/action-options"));
             router.addRoute("/action-options", new RouteActionOptions(router));
-            router.addRoute("/sort", new SortRoute(router).to("/action-options"));
+            router.addRoute("/sort", new RouteSort(router).to("/action-options"));
             router.addRoute("/write-file", new RouteWriteToFile(router).to("/root"));
             return router;
         }
@@ -50,7 +50,7 @@ public class RouterCreateFactory {
             var router = new Router("/root");
             router.setState(state);
             router.addRoute("/menu", new MenuRoute(router));
-            router.addRoute("/sort", new SortRoute(router).to("/menu"));
+            router.addRoute("/sort", new RouteSort(router).to("/menu"));
             router.addRoute("/search", new RouteSearch(router).to("/menu"));
             router.addRoute("/read-file", new RouteReadFile(router).to("/menu"));
             router.addRoute("/write-file", new RouteWriteToFile(router).to("/menu"));
