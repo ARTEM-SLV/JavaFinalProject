@@ -26,7 +26,7 @@ public class RouteDataInput implements IRoute {
     @Override
     public void execute(Scanner scanner) throws Exception {
         var rawData = scanner.nextLine();
-        if (rawData.isEmpty()){
+        if (rawData.isEmpty()) {
             return;
         }
 
@@ -50,12 +50,24 @@ public class RouteDataInput implements IRoute {
             }
 
             this.step++;
-        } catch (Exception e){
+        } catch (Exception e) {
             throw new Exception(e.getMessage());
         }
 
         if (this.step >= len) {
-            this.router.getContext().Data = this.objects;
+            if (this.router.getContext().Data == null) {
+                this.router.getContext().Data = new Object[]{};
+            }
+            // Добавляем введенные данные в контекст
+            Object[] tempArray = new Object[this.objects.length + this.router.getContext().Data.length];
+            System.arraycopy(this.router.getContext().Data, 0, tempArray, 0, this.router.getContext().Data.length);
+            System.arraycopy(this.objects, 0, tempArray, this.router.getContext().Data.length, this.objects.length);
+            this.router.getContext().Data = tempArray;
+
+            //очищаем все данные для следующего запуска функции
+            this.objects = null;
+            this.step = 0;
+
             this.router.step = StepsRouter.OPTIONS;
             this.router.option = Option.SORT;
         }

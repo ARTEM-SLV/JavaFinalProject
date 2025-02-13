@@ -1,15 +1,48 @@
 package app;
 
+import app.enums.StepsRouter;
+import app.enums.OptionsType;
+import app.model.Car;
 import app.modules.router.ConsolePort;
 import app.modules.router.RouterCreateFactory;
 import app.modules.router.state.State;
+import app.router.Router;
+import app.router.routers.*;
+import app.search.BinarySearch;
+import app.search.Searcher;
+import app.service.IExecutor;
+import app.service.Executor;
+import app.sort.ShellSort;
+import app.sort.Sorter;
+
+import java.util.Arrays;
+import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) {
+//        startRouter();
+
         var state = new State();
-        var mainRouter = RouterCreateFactory.MainRouter.create(state);
+        var testRouter = RouterCreateFactory.ConfigRouter.create(state);
         var consolePort = new ConsolePort();
-        consolePort.process(mainRouter);
+        consolePort.process(testRouter);
+//        var mainRouter = RouterCreateFactory.MainRouter.create(state);
+//        var consolePort = new ConsolePort();
+//        consolePort.process(mainRouter);
+//        testSortAndSearch();
+    }
+
+    private static void startRouter(){
+        try(Scanner scanner = new Scanner(System.in)) {
+            var newRouter = new Router(scanner);
+            newRouter.addCommand(StepsRouter.LENGTH, new RouteReadInputLength(newRouter));
+            newRouter.addCommand(StepsRouter.OPTIONS, new RouteOptions(newRouter));
+            newRouter.addCommand(StepsRouter.INPUT_DATA, new RouteDataInput(newRouter));
+            newRouter.addCommand(StepsRouter.WRITE_FILE, new RouteWriteToFile(newRouter));
+            newRouter.addCommand(StepsRouter.EXIT, new RouteExit());
+
+            newRouter.process();
+        }
     }
 
     private static void testSortAndSearch(){

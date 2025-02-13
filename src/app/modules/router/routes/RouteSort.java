@@ -1,25 +1,22 @@
-package app.router.routers;
+package app.modules.router.routes;
 
-import app.enums.Option;
 import app.enums.OptionsType;
-import app.enums.StepsRouter;
 import app.model.Book;
 import app.model.Car;
 import app.model.Vegetable;
-import app.router.ExitException;
-import app.router.IRoute;
-import app.router.Router;
-import app.service.IExecutor;
-import app.service.UniversalComparator;
+import app.modules.router.BaseRoute;
+
+import app.modules.router.Router;
+
+import app.modules.router.exeptions.BackException;
 import app.service.Executor;
+import app.service.IExecutor;
 import app.sort.ShellSort;
 import app.sort.Sorter;
 
-import java.util.Arrays;
-import java.util.Comparator;
-import java.util.Scanner;
+import java.io.Serializable;
 
-public class RouteSort<T> implements IRoute<T> {
+public class RouteSort extends BaseRoute {
     private final Router router;
 
     public RouteSort(Router router) {
@@ -28,12 +25,17 @@ public class RouteSort<T> implements IRoute<T> {
 
     @Override
     public void render() {
-        System.out.println("Сортировка массива:");
+        System.out.println("Сортировка.");
+        System.out.println("Нажмите любую клавишу для продолжения.");
     }
 
     @Override
-    public void execute(Scanner scanner) throws ExitException {
-        Object[] data = router.getContext().Data;
+    public void execute(String args) throws Exception {
+        Object[] data = router.getState().Data;
+
+        if (data == null || data.length < 1) {
+            throw new BackException("Массив пуст.");
+        }
 
         int carCount = 0;
         int bookCount = 0;
@@ -71,9 +73,9 @@ public class RouteSort<T> implements IRoute<T> {
         }
 
         //Сортировка объектов
-        this.sortArray(UniversalComparator.getComparator(OptionsType.CAR), new Executor<>(OptionsType.CAR), cars);
-        this.sortArray(UniversalComparator.getComparator(OptionsType.BOOK), new Executor<>(OptionsType.BOOK), books);
-        this.sortArray(UniversalComparator.getComparator(OptionsType.VEGETATION), new Executor<>(OptionsType.VEGETATION), vegetables);
+        this.sortArray(new Executor<>(OptionsType.CAR), cars);
+        this.sortArray( new Executor<>(OptionsType.BOOK), books);
+        this.sortArray(new Executor<>(OptionsType.VEGETATION), vegetables);
 
 
         //Объединение массивов
@@ -83,15 +85,14 @@ public class RouteSort<T> implements IRoute<T> {
         System.arraycopy(vegetables, 0, mergedArray, cars.length + books.length, vegetables.length);
 
         //Сохранение объединенного массива в контекст
-        this.router.getContext().Data = mergedArray;
+        this.router.getState().Data = mergedArray;
 
-        this.router.step = StepsRouter.OPTIONS;
-        this.router.option = Option.SEARCH;
+        this.router.navigateTo(this.pathToRoute);
     }
 
     // Сортирует массив с помощью заданного компаратора
-    private void sortArray(Comparator comparator, IExecutor<T> executor, Object[] array) {
-        Sorter<T> sorter = new ShellSort<>();
-        executor.sort((T[]) array, sorter);
+    private void sortArray(IExecutor<Serializable> executor, Object[] array) {
+        Sorter<Serializable> sorter = new ShellSort<>();
+        executor.sort((Serializable[]) array, sorter);
     }
 }

@@ -44,8 +44,11 @@ public class RouteOptions implements IRoute {
         System.out.println("");
         System.out.println("""
                 Основное меню:
-                1 - Считать с файла
-                2 - Ручной ввод
+                1 - Данные
+                2 - Считать с файла
+                3 - Запись в файл
+                4 - Ручной ввод
+                5 - Сортировка
                 0 - Выход из программы
                 """);
     }
@@ -83,8 +86,11 @@ public class RouteOptions implements IRoute {
 
     private void executeMenu(int value){
         switch (value) {
-            case 1 -> this.router.step = StepsRouter.WRITE_FILE;
-            case 2 -> this.router.step = StepsRouter.LENGTH;
+            case 1 -> this.router.step = StepsRouter.PRINT;
+            case 2 -> this.router.step = StepsRouter.READ_FILE;
+            case 3 -> this.router.step = StepsRouter.WRITE_FILE;
+            case 4 -> this.router.step = StepsRouter.LENGTH;
+            case 5 -> this.router.step = StepsRouter.SORT;
             case 0 -> this.router.step = StepsRouter.EXIT;
             default -> throw new NumberFormatException("Такой команды не существует.");
         }
