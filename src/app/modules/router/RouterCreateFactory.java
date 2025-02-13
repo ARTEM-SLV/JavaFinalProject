@@ -52,6 +52,7 @@ public class RouterCreateFactory {
             router.addRoute("/menu", new MenuRoute(router));
             router.addRoute("/sort", new SortRoute(router).to("/menu"));
             router.addRoute("/search", new RouteSearch(router).to("/menu"));
+            router.addRoute("/read-file", new RouteReadFile(router).to("/menu"));
             router.addRoute("/write-file", new RouteWriteToFile(router).to("/menu"));
             router.addRoute("/options", new SelectTypeRoute(router).to("/menu"));
             router.addRoute("/data-print", new DataPrintRoute(router).to("/menu"));

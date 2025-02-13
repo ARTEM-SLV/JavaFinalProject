@@ -6,7 +6,9 @@ public abstract class BaseRoute implements IRoute {
     protected String pathToRoute;
     protected String name;
 
-    public BaseRoute() {}
+    public BaseRoute() {
+    }
+
     public BaseRoute(String name) {
         this.name = name;
     }
@@ -21,11 +23,6 @@ public abstract class BaseRoute implements IRoute {
     }
 
     protected Boolean isNumberString(String str) {
-        try {
-            Double.parseDouble(str);
-            return true;
-        } catch (NumberFormatException e) {
-            return false;
-        }
+        return str != null && str.matches("-?\\d+(\\.\\d+)?");
     }
 }

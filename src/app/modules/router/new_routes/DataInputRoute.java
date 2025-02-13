@@ -8,6 +8,8 @@ import app.modules.router.BaseRoute;
 import app.modules.router.Router;
 import app.modules.router.TablePrint;
 
+import java.util.Arrays;
+
 public class DataInputRoute extends BaseRoute {
     private Router router;
 
@@ -20,6 +22,10 @@ public class DataInputRoute extends BaseRoute {
 
     @Override
     public void render() {
+        if(this.router.getState().optionsType == null){
+            System.out.println("Тип данных не выбран");
+            this.router.navigateTo(this.pathToRoute);
+        }
         TablePrint.print(this.router.getState().optionsType, this.objects);
     }
 
@@ -27,10 +33,28 @@ public class DataInputRoute extends BaseRoute {
     public void execute(String args) throws Exception {
         var len = this.router.getState().Length;
 
-        if (this.step >= len) {
-            this.router.getState().Data = this.objects;
+        if(this.router.getState().Length == 0){
+            System.out.println("Укажите длину массива");
             this.router.navigateTo(this.pathToRoute);
+        }
+
+        if (this.step >= len) {
+
+            // Если массив в состоянии пустой
+            if (this.router.getState().Data == null) {
+                this.router.getState().Data = new Object[]{};
+            }
+
+            // Добавляем введенные данные в контекст
+            Object[] tempArray = new Object[this.objects.length + this.router.getState().Data.length];
+            System.arraycopy(this.router.getState().Data, 0, tempArray, 0, this.router.getState().Data.length);
+            System.arraycopy(this.objects, 0, tempArray, this.router.getState().Data.length, this.objects.length);
+            this.router.getState().Data = tempArray;
+
+            //очищаем все данные для следующего запуска функции
+            this.objects = null;
             this.step = 0;
+            this.router.navigateTo(this.pathToRoute);
             return;
         }
 
@@ -83,21 +107,19 @@ public class DataInputRoute extends BaseRoute {
             }
         }
 
-
         switch (type) {
             case BOOK -> {
-                if(this.isNumberString(items[0]) || this.isNumberString(items[1]) || !this.isNumberString(items[2])) {
+                if(!this.isNumberString(items[0]) || !this.isNumberString(items[1]) || !this.isNumberString(items[2])) {
                     throw new Exception("Неверный формат данных. Автор - Строка, Название - Строка, pages - Число");
                 }
             }
             case CAR -> {
-                if (this.isNumberString(items[0]) || !this.isNumberString(items[1]) || !this.isNumberString(items[2])) {
+                if (!this.isNumberString(items[0]) || !this.isNumberString(items[1]) || !this.isNumberString(items[2])) {
                     throw new Exception("Неверный формат данных. Модель - Строка, Мощность - Число, Год - Число");
                 }
             }
             case VEGETATION -> {
-                var check = this.isNumberString(items[0]) || !this.isNumberString(items[1]) || this.isNumberString(items[2]);
-                if(check) {
+                if (!this.isNumberString(items[0]) || !this.isNumberString(items[1]) || !this.isNumberString(items[2])) {
                     throw new Exception("Неверный формат данных. Тип - Строка, Вес - Число, Цвет - Строка");
                 }
             }
