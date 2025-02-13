@@ -29,8 +29,8 @@ public class RouteMainMenu extends BaseRoute {
         var value = Integer.parseInt(args);
 
         switch (value) {
-            case 2 -> this.router.navigateToPath("/fill-manually");
-            case 3 -> this.router.navigateToPath("/random");
+            case 2 -> this.router.navigateToRouterPath("/fill-manually");
+            case 3 -> this.router.navigateToRouterPath("/random");
             default -> throw new NumberFormatException("Такой команды не существует.");
         }
     }

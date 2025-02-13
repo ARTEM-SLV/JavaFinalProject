@@ -1,7 +1,7 @@
 package app.modules.router.routes;
 
-import app.modules.router.ExitException;
-import app.modules.router.IRoute;
+import app.modules.router.exeptions.ExitException;
+import app.modules.router.interfaces.IRoute;
 
 public class RouteExit implements IRoute {
     @Override

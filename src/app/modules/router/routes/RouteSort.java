@@ -7,6 +7,7 @@ import app.modules.router.BaseRoute;
 
 import app.modules.router.Router;
 
+import app.modules.router.exeptions.BackException;
 import app.service.Executor;
 import app.service.IExecutor;
 import app.sort.ShellSort;
@@ -21,13 +22,23 @@ public class RouteSort extends BaseRoute {
 
     @Override
     public void render() {
-        System.out.println("Сортировка");
+        var type = this.router.getState().optionsType;
+        var printMessage = type == null ? "Тип не выбран." : type;
+        System.out.println("Сортировка по " + printMessage + "\n" + "Нажмите любую клавишу для продолжения.");
     }
 
     @Override
     public void execute(String args) throws Exception {
         var data = this.router.getState().Data;
         var selectOptionType = this.router.getState().optionsType;
+
+        if (data == null || data.length < 1) {
+            throw new BackException("Массив пуст.");
+        }
+
+        if (selectOptionType == null) {
+            throw new BackException("Не выбран по какому типу будем сортировать.");
+        }
 
         switch (selectOptionType) {
             case BOOK: {

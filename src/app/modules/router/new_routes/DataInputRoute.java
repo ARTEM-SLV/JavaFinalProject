@@ -1,46 +1,48 @@
-package app.modules.router.routes;
+package app.modules.router.new_routes;
 
 import app.enums.OptionsType;
 import app.model.Book;
 import app.model.Car;
 import app.model.Vegetable;
-import app.modules.router.*;
+import app.modules.router.BaseRoute;
+import app.modules.router.Router;
+import app.modules.router.TablePrint;
 
-public class RouteDataInput extends BaseRoute {
-    private final Router router;
+public class DataInputRoute extends BaseRoute {
+    private Router router;
 
     private Object[] objects; // Массив для хранения объектов
     private int step; // Индекс для отслеживания текущего заполненного элемента
 
-    public RouteDataInput(Router router) {
+
+    public DataInputRoute(Router router) {
         this.router = router;
     }
 
     @Override
     public void render() {
-
-//        this.tablePrint(this.router.getState().optionsType, this.objects);
         TablePrint.print(this.router.getState().optionsType, this.objects);
     }
 
     @Override
     public void execute(String args) throws Exception {
-        var selectOptions = this.router.getState().optionsType;
-        var rawData = this.validationArgs(args, selectOptions);
-
         var len = this.router.getState().Length;
-
-
-        if (this.objects == null) {
-           this.objects = new Object[len];
-        }
 
         if (this.step >= len) {
             this.router.getState().Data = this.objects;
             this.router.navigateTo(this.pathToRoute);
             this.step = 0;
             return;
-       }
+        }
+
+        var selectOptions = this.router.getState().optionsType;
+        var rawData = this.validationArgs(args, selectOptions);
+
+
+        if (this.objects == null) {
+            this.objects = new Object[len];
+        }
+
 
         switch (selectOptions) {
             case CAR -> {
