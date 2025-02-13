@@ -56,11 +56,16 @@ public class RandomGenerationRoute extends BaseRoute {
 
         TablePrint.print(selectType, arr);
 
-//        for (var result : arr) {
-//            System.out.println(result);
-//        }
+        // Если массив в состоянии пустой
+        if (this.router.getState().Data == null) {
+            this.router.getState().Data = new Object[]{};
+        }
 
-        this.router.getState().Data = arr;
+        // Добавляем новые данные в состояние
+        Object[] tempArray = new Object[arr.length + this.router.getState().Data.length];
+        System.arraycopy(this.router.getState().Data, 0, tempArray, 0, this.router.getState().Data.length);
+        System.arraycopy(arr, 0, tempArray, this.router.getState().Data.length, arr.length);
+        this.router.getState().Data = tempArray;
 
         this.router.navigateTo(this.pathToRoute);
     }
