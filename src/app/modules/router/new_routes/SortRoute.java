@@ -1,4 +1,4 @@
-package app.modules.router.routes;
+package app.modules.router.new_routes;
 
 import app.model.Book;
 import app.model.Car;
@@ -13,10 +13,10 @@ import app.service.IExecutor;
 import app.sort.ShellSort;
 import app.sort.Sorter;
 
-public class RouteSort extends BaseRoute {
+public class SortRoute extends BaseRoute {
     private final Router router;
 
-    public RouteSort(Router router) {
+    public SortRoute(Router router) {
         this.router = router;
     }
 

@@ -14,7 +14,6 @@ public class DataInputRoute extends BaseRoute {
     private Object[] objects; // Массив для хранения объектов
     private int step; // Индекс для отслеживания текущего заполненного элемента
 
-
     public DataInputRoute(Router router) {
         this.router = router;
     }
