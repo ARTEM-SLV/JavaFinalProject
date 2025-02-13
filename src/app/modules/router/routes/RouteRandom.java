@@ -29,19 +29,16 @@ public class RouteRandom extends BaseRoute {
 
         switch (selectType){
             case BOOK: {
-//                arr = new RandomBookGenerator().generateRandom(len);
-                arr = new RandomInput().generateRandomBook(len);
+                arr = new RandomBookGenerator().generateRandom(len);
                 break;
             }
             case CAR:
             {
-//                arr = new RandomCarGenerator().generateRandom(len);
-                arr = new RandomInput().generateRandomCar(len);
+                arr = new RandomCarGenerator().generateRandom(len);
                 break;
             }
             case VEGETATION: {
-//                arr = new RandomVegetableGenerator().generateRandom(len);
-                arr = new RandomInput().generateRandomVegetable(len);
+                arr = new RandomVegetableGenerator().generateRandom(len);
                 break;
             }
         }

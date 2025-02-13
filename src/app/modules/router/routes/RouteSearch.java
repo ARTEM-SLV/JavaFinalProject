@@ -51,35 +51,23 @@ public class RouteSearch extends BaseRoute {
         switch (type) {
             case CAR -> {
                 var car = Validator.checkCar(values);
-                carSearch((Car[]) data, car, type);
+                searchByType((Car[]) data, car, type);
             }
             case BOOK -> {
                 var book = Validator.checkBook(values);
-                bookSearch((Book[]) data, book, type);
+                searchByType((Book[]) data, book, type);
             }
             case VEGETATION -> {
                 var vegetable = Validator.checkVegetable(values);
-                vegetableSearch((Vegetable []) data, vegetable, type);
+                searchByType((Vegetable []) data, vegetable, type);
             }
         }
 
     }
 
-    private void carSearch(Car[] cars, Car car, OptionsType type) {
-        Searcher<Car> searcher = new BinarySearch<>();
-        IExecutor<Car> IExecutor = new Executor<>(type);
-        IExecutor.search(cars, searcher, car);
-    }
-
-    private void bookSearch(Book[] books, Book book, OptionsType type) {
-        Searcher<Book> searcher = new BinarySearch<>();
-        IExecutor<Book> IExecutor = new Executor<>(type);
-        IExecutor.search(books, searcher, book);
-    }
-
-    private void vegetableSearch(Vegetable[] vegetables, Vegetable vegetable, OptionsType type) {
-        Searcher<Vegetable> searcher = new BinarySearch<>();
-        IExecutor<Vegetable> IExecutor = new Executor<>(type);
-        IExecutor.search(vegetables, searcher, vegetable);
+    private <U, E extends OptionsType> void searchByType(U[] arr, U obj, E type) {
+        Searcher<U> searcher = new BinarySearch<>();
+        IExecutor<U> IExecutor = new Executor<>(type);
+        IExecutor.search(arr, searcher, obj);
     }
 }

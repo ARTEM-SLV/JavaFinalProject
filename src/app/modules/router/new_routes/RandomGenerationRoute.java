@@ -1,8 +1,12 @@
 package app.modules.router.new_routes;
 
+import app.input.RandomBookGenerator;
+import app.input.RandomCarGenerator;
 import app.input.RandomInput;
+import app.input.RandomVegetableGenerator;
 import app.modules.router.BaseRoute;
 import app.modules.router.Router;
+import app.modules.router.TablePrint;
 import app.modules.router.exeptions.BackException;
 
 public class RandomGenerationRoute extends BaseRoute {
@@ -36,26 +40,25 @@ public class RandomGenerationRoute extends BaseRoute {
 
         switch (selectType){
             case BOOK: {
-//                arr = new RandomBookGenerator().generateRandom(len);
-                arr = new RandomInput().generateRandomBook(len);
+              arr = new RandomBookGenerator().generateRandom(len);
                 break;
             }
             case CAR:
             {
-//                arr = new RandomCarGenerator().generateRandom(len);
-                arr = new RandomInput().generateRandomCar(len);
+                arr = new RandomCarGenerator().generateRandom(len);
                 break;
             }
             case VEGETATION: {
-//                arr = new RandomVegetableGenerator().generateRandom(len);
-                arr = new RandomInput().generateRandomVegetable(len);
+                arr = new RandomVegetableGenerator().generateRandom(len);
                 break;
             }
         }
 
-        for (var result : arr) {
-            System.out.println(result);
-        }
+        TablePrint.print(selectType, arr);
+
+//        for (var result : arr) {
+//            System.out.println(result);
+//        }
 
         this.router.getState().Data = arr;
 
