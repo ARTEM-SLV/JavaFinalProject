@@ -19,6 +19,7 @@ public class MenuRoute extends BaseRoute {
         var lenMessage = len <= 0 ? "[Длина не указана.]" : len;
 
         System.out.println("""
+                
                 1 - Данные
                 2 - Считать с файла
                 3 - Запись в файл
@@ -29,6 +30,7 @@ public class MenuRoute extends BaseRoute {
                 8 - Случайная генерация
                 ---9 = Указать длину массива
                 0 - Выход из программы
+                
                 """
                 + "Длина: " + lenMessage + "    " + "Тип: " + typeMessage);
     }
@@ -45,7 +47,6 @@ public class MenuRoute extends BaseRoute {
             case 1 -> this.router.navigateTo("/data-print");
             case 2 -> this.router.navigateTo("/read-file");
             case 3 -> this.router.navigateTo("/write-file");
-//            case 4 -> this.router.navigateToRouterPath("/fill-manually");
             case 4 -> this.router.navigateTo("/fill-manually");
             case 5 -> this.router.navigateTo("/sort");
             case 6 -> this.router.navigateTo("/search");

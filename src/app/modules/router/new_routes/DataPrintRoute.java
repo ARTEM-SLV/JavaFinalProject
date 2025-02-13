@@ -34,23 +34,9 @@ public class DataPrintRoute extends BaseRoute {
         var dataBooks = Arrays.stream(data).filter((book) -> book instanceof Book).toArray();
         var dataVegetable = Arrays.stream(data).filter((vegetable) -> vegetable instanceof Vegetable).toArray();
 
-        if (dataCars != null || dataCars.length > 0) {
-            TablePrint.print(OptionsType.CAR, dataCars);
-        }
-
-        if (dataBooks != null || dataBooks.length > 0) {
-            TablePrint.print(OptionsType.BOOK, dataBooks);
-        }
-
-        if (dataVegetable != null || dataVegetable.length > 0) {
-            TablePrint.print(OptionsType.VEGETATION, dataVegetable);
-        }
-
-//        if (selectType == null) {
-//            this.router.navigateTo(this.pathToRoute);
-//        } else {
-//            TablePrint.print(this.router.getState().optionsType, this.router.getState().Data);
-//        }
+        this.printDataIfNotEmpty(OptionsType.CAR, dataCars);
+        this.printDataIfNotEmpty(OptionsType.BOOK, dataBooks);
+        this.printDataIfNotEmpty(OptionsType.VEGETATION, dataVegetable);
 
         System.out.println("Нажмите что бы продолжить.");
     }
@@ -58,5 +44,11 @@ public class DataPrintRoute extends BaseRoute {
     @Override
     public void execute(String args) throws Exception {
         this.router.navigateTo(this.pathToRoute);
+    }
+
+    private void printDataIfNotEmpty(OptionsType type, Object[] data) {
+        if (data != null && data.length > 0) {
+            TablePrint.print(type, data);
+        }
     }
 }

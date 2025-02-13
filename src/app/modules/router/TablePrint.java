@@ -12,12 +12,15 @@ public class TablePrint {
 
         switch (type) {
             case BOOK:
+                System.out.println("\033[1m***Книги***\033[0m");
                 System.out.printf(format, "Автор", "Название", "Страницы");
                 break;
             case CAR:
+                System.out.println("\033[1m***Автомобили***\033[0m");
                 System.out.printf(format, "Модель", "Мощность" , "Год");
                 break;
             case VEGETATION:
+                System.out.println("\033[1m***Корнеплод***\033[0m");
                 System.out.printf(format, "Тип", "Вес", "Цвет");
                 break;
 
@@ -45,5 +48,6 @@ public class TablePrint {
 
             }
         }
+        System.out.printf("%-40s %-40s %-20s%n", "-".repeat(40), "-".repeat(40), "-".repeat(20));
     }
 }

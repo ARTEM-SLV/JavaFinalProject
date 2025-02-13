@@ -79,7 +79,7 @@ public class DataInputRoute extends BaseRoute {
                 this.objects[step] = new Book.BookBuilder()
                         .author(rawData[0])
                         .name(rawData[1])
-                        .pageCount(Integer.parseInt(rawData[1]))
+                        .pageCount(Integer.parseInt(rawData[2]))
                         .build();
             }
             case VEGETATION -> {
@@ -109,17 +109,17 @@ public class DataInputRoute extends BaseRoute {
 
         switch (type) {
             case BOOK -> {
-                if(!this.isNumberString(items[0]) || !this.isNumberString(items[1]) || !this.isNumberString(items[2])) {
+                if(this.isNumberString(items[0]) || this.isNumberString(items[1]) || !this.isNumberString(items[2])) {
                     throw new Exception("Неверный формат данных. Автор - Строка, Название - Строка, pages - Число");
                 }
             }
             case CAR -> {
-                if (!this.isNumberString(items[0]) || !this.isNumberString(items[1]) || !this.isNumberString(items[2])) {
+                if (this.isNumberString(items[0]) || !this.isNumberString(items[1]) || !this.isNumberString(items[2])) {
                     throw new Exception("Неверный формат данных. Модель - Строка, Мощность - Число, Год - Число");
                 }
             }
             case VEGETATION -> {
-                if (!this.isNumberString(items[0]) || !this.isNumberString(items[1]) || !this.isNumberString(items[2])) {
+                if (this.isNumberString(items[0]) || !this.isNumberString(items[1]) || this.isNumberString(items[2])) {
                     throw new Exception("Неверный формат данных. Тип - Строка, Вес - Число, Цвет - Строка");
                 }
             }
