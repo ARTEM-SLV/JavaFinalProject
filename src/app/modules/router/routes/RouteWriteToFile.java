@@ -1,14 +1,12 @@
-package app.router.routers;
+package app.modules.router.routes;
 
-import app.enums.StepsRouter;
-import app.router.IRoute;
-import app.router.Router;
+import app.modules.router.BaseRoute;
+import app.modules.router.Router;
 import app.utility.FileIO;
 
 import java.io.*;
-import java.util.Scanner;
 
-public class RouteWriteToFile implements IRoute {
+public class RouteWriteToFile extends BaseRoute {
     private final Router router;
 
     public RouteWriteToFile(Router router) {
@@ -21,8 +19,13 @@ public class RouteWriteToFile implements IRoute {
     }
 
     @Override
-    public void execute(Scanner scanner) {
-        var data = this.router.getContext().Data;
+    public void execute(String args) throws Exception{
+        var data = this.router.getState().Data;
+
+        if (data == null || data.length < 1) {
+            throw new Exception("Массив пуст");
+        }
+
         try {
             Serializable[] serializableData = new Serializable[data.length];
 
@@ -30,10 +33,9 @@ public class RouteWriteToFile implements IRoute {
                 serializableData[i] = (Serializable) data[i];
             }
 
-            // TODO: 12.02.2025 поправить сохранение в файл 
-//            FileIO.write("output.txt", serializableData);
+            FileIO.write("output.txt", false, serializableData);
 
-            this.router.setStepMenu();
+            this.router.navigateToPath(this.pathToRoute);
         } catch (Exception e) {
             System.out.println("Ошибка>>RouteWriteToFile");
        }

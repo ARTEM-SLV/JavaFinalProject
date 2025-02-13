@@ -31,7 +31,7 @@ public class RouteReadInputLength implements IRoute {
         if (len < 0){
             throw new Exception("Ошибка ввода значения " + len + "! Введите положительное число.");
         } else if (len == 0) {
-            this.router.step = StepsRouter.MENU;
+            this.router.setStepMenu();
             return;
         }
 

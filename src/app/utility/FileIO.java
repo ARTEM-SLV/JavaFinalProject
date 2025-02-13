@@ -4,6 +4,12 @@ import java.io.*;
 
 public class FileIO {
 
+    /**
+     * Чтение из файла
+     *
+     * @param filename - имя файла включая расширение
+     * @return массив объектов реализующих Serializable
+     */
     public static Serializable[] read(String filename) {
 
         replaceMultipleNewlines(filename);
@@ -69,9 +75,15 @@ public class FileIO {
         return 0;
     }
 
-    // Запись в файл
-    public static void write(String filename, Serializable... objects) {
-        try (BufferedWriter writer = new BufferedWriter(new FileWriter(filename, true))) {
+    /**
+     * Запись в файл.
+     *
+     * @param filename - имя файла включая расширение
+     * @param AddOrUpdateFile - True: добавить к файлу. False: заменить файл полностью.
+     * @param objects объект реализующий интерфейс Serializable или массив таких объектов
+     */
+    public static void write(String filename,  boolean AddOrUpdateFile, Serializable... objects) {
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(filename, AddOrUpdateFile))) {
             writer.newLine();
             writer.newLine();
 
