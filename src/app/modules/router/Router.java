@@ -31,6 +31,9 @@ public class Router {
 
     public void addToGroupRouter(String path, Router router) {
         this.groupRouter.put(path, router);
+//        if (this.headRouter == null) {
+//            this
+//        }
         router.headRouter = this;
         router.state = this.state;
     }
@@ -57,7 +60,7 @@ public class Router {
         if (this.groupRouter.containsKey(path)) {
             Router targetRouter = this.groupRouter.get(path);
             this.currRoute = targetRouter.currRoute;
-//            this.headRouter = targetRouter;
+            this.headRouter.currRoute = this.currRoute;
             targetRouter.headRouter = this; // Устанавливаем обратную ссылку
             return; // Выходим, так как нашли маршрут
         }
@@ -68,7 +71,7 @@ public class Router {
             return; // Выходим, так как нашли маршрут
         }
 
-        // Если headRouter существует и его путь совпадает с запрошенным
+//         Если headRouter существует и его путь совпадает с запрошенным
         if (this.headRouter != null && this.headRouter.path.equals(path)) {
             this.headRouter.currRoute = this.headRouter.routes.get(path);
             return; // Выходим, так как нашли маршрут
@@ -91,6 +94,8 @@ public class Router {
             this.currRoute = getRoute;
         } else {
             this.headRouter.currRoute = getRoute;
+            this.currRoute = getRoute;
+            this.headRouter.headRouter.currRoute = getRoute;
         }
     }
 
@@ -115,9 +120,11 @@ public class Router {
         Router current = this;
 
         if (current.getHeadRouter() != null) {
-            while (current.getHeadRouter() != null) {
+            var cur = current.getHeadRouter();
+            while (cur != null) {
                 current = current.getHeadRouter();
-                fullPath.insert(0, current.getPath() + "/" + this.currRoute.getName());
+                fullPath.append(current.getPath() + "/" + this.currRoute.getName());
+                cur = cur.headRouter;
             }
         } else {
             var pathRouter = current.getPath();

@@ -45,7 +45,62 @@ public class RouterCreateFactory {
         }
     }
 
-    public static class ConfigRouter {
+    public static class Add {
+        public static Router create(State state) {
+           var routerMain = new Router("/root");
+            routerMain.setState(state);
+            routerMain.addRoute("/root", new TestMenuRoute(routerMain));
+
+
+
+            ////////////////////////////
+            var routerGroupAdd = new Router("/group-add");
+            routerGroupAdd.setState(state);
+            routerGroupAdd.addRoute("/group-add", new AddMenuRoute(routerGroupAdd));
+
+            //
+            var routerFillManually = new Router("/group-fill-manually");
+            routerFillManually.addRoute("/len", new LengthInputRoute(routerFillManually).to("/options"));
+            routerFillManually.addRoute("/options", new SelectTypeRoute(routerFillManually).to("/fill-manually"));
+            routerFillManually.addRoute("/fill-manually", new DataInputRoute(routerFillManually));
+            //
+
+            var routerReadFile = new Router("/group-read-file");
+            routerReadFile.addRoute("/len", new LengthInputRoute(routerReadFile).to("/options"));
+            routerReadFile.addRoute("/options", new SelectTypeRoute(routerReadFile).to("/read-file"));
+            routerReadFile.addRoute("/read-file", new RouteReadFile(routerReadFile));
+
+
+            var routerRandom= new Router("/group-random");
+            routerRandom.addRoute("/len", new LengthInputRoute(routerRandom).to("/options"));
+            routerRandom.addRoute("/options", new SelectTypeRoute(routerRandom).to("/random"));
+            routerRandom.addRoute("/random", new RandomGenerationRoute(routerRandom));
+
+
+            routerGroupAdd.addToGroupRouter("/routerFillManually", routerFillManually);
+            routerGroupAdd.addToGroupRouter("/routerReadFile", routerReadFile);
+            routerGroupAdd.addToGroupRouter("/routerRandom", routerRandom);
+//            return routerGroupAdd;
+            ///////////////////////////
+
+            routerMain.addToGroupRouter("/router-group-add", routerGroupAdd);
+            return routerMain;
+
+//            router.addRoute("/read", new RouteReadFile(router).to("/menu"));
+
+//            var group = new Router("/g-random");
+//            group.addRoute("/len", new LengthInputRoute(group).to("/options"));
+//            group.addRoute("/options", new SelectTypeRoute(group).to("/random"));
+//            group.addRoute("/random", new RandomGenerationRoute(group).to("/g-random"));
+//            router.addToGroupRouter("/g-random", group);
+//
+//            routerM.addToGroupRouter("/add", router);
+
+//            return router;
+        }
+    }
+
+    public static class MaksimConfigRouter {
         public static Router create(State state) {
             var router = new Router("/root");
             router.setState(state);
