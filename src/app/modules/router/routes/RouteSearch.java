@@ -38,7 +38,7 @@ public class RouteSearch extends BaseRoute {
         }
 
         if (selectOptionType == null) {
-            throw new BackException("Массив пустой.");
+            throw new BackException("Тип не выбран.");
         }
 
         search(data, selectOptionType, args);

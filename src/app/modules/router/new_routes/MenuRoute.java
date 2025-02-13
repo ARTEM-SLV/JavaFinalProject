@@ -45,7 +45,8 @@ public class MenuRoute extends BaseRoute {
             case 1 -> this.router.navigateTo("/data-print");
             case 2 -> this.router.navigateTo("/read-file");
             case 3 -> this.router.navigateTo("/write-file");
-            case 4 -> this.router.navigateToRouterPath("/fill-manually");
+//            case 4 -> this.router.navigateToRouterPath("/fill-manually");
+            case 4 -> this.router.navigateTo("/fill-manually");
             case 5 -> this.router.navigateTo("/sort");
             case 6 -> this.router.navigateTo("/search");
             case 7 -> this.router.navigateTo("/options");

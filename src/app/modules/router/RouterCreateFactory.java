@@ -57,7 +57,9 @@ public class RouterCreateFactory {
             router.addRoute("/data-print", new DataPrintRoute(router).to("/menu"));
             router.addRoute("/random", new RandomGenerationRoute(router).to("/menu"));
             router.addRoute("/len", new LengthInputRoute(router).to("/menu"));
-            router.addToGroupRouter("/fill-manually", RouterCreateFactory.FillManually.create());
+            router.addRoute("/fill-manually", new DataInputRoute(router).to("/menu"));
+
+//            router.addToGroupRouter("/fill-manually", RouterCreateFactory.FillManually.create());
             return router;
         }
     }
