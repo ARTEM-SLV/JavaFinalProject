@@ -13,12 +13,13 @@ public class ActionOptionsRoute extends BaseRoute {
 
     @Override
     public void render() {
-        System.out.println("");
         System.out.println("""
+                
                 1 - Сортировка
                 2 - Поиск
                 3 - Записать в файл
                 0 - Предыдущее меню
+                
                 """);
     }
 

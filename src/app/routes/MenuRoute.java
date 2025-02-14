@@ -15,6 +15,7 @@ public class MenuRoute extends BaseRoute {
     @Override
     public void render() {
         System.out.println("""
+                
                 1 - Считать с файла
                 2 - Ручной ввод
                 3 - Случайная генерация

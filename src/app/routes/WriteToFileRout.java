@@ -44,6 +44,8 @@ public class WriteToFileRout extends BaseRoute {
                 System.out.println("Формат имени файла: file.txt");
             }
 
+            this.router.getState().Data = null;
+
             this.router.navigateTo(this.pathToRoute);
         } catch (Exception e) {
             System.out.println("Ошибка записи в файл");

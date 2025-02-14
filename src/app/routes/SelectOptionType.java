@@ -14,13 +14,14 @@ public class SelectOptionType extends BaseRoute {
 
     @Override
     public void render() {
-        System.out.println("");
         System.out.println("""
+            
             Какой тип данных будем использовать?
             1 - Автомобиль
             2 - Книга
             3 - Корнеплод
             0 - Предыдущее меню
+            
             """);
     }
 
