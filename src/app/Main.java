@@ -1,13 +1,15 @@
 package app;
 
+import app.assembly.RouterAssemblyV1;
+import app.assembly.RouterAssemblyV2;
 import app.enums.StepsRouter;
 import app.enums.OptionsType;
 import app.model.Car;
-import app.modules.router.ConsolePort;
-import app.modules.router.RouterCreateFactory;
+import app.modules.console.ConsolePort;
+import app.modules.router.*;
+import app.routes.VersionConsoleMenu;
 import app.modules.router.state.State;
-import app.router.Router;
-import app.router.routers.*;
+import app.archive.router_archive.routers.*;
 import app.search.BinarySearch;
 import app.search.Searcher;
 import app.service.IExecutor;
@@ -20,12 +22,46 @@ import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) {
-//        startRouter();
 
         var state = new State();
-        var testRouter = RouterCreateFactory.ConfigRouterNew.create(state);
-        var consolePort = new ConsolePort();
-        consolePort.process(testRouter);
+        var router = new Router("root");
+        router.addRoute(new VersionConsoleMenu(router, "console-version"));
+        router.addGroup(RouterAssemblyV1.create(state));
+        router.addGroup(RouterAssemblyV2.create(state));
+        var cPort = new ConsolePort<Router>();
+        cPort.process(router);
+
+
+//        startRouter();
+
+//        var state = new State();
+//        var testRouter = RouterCreateFactory.ConfigRouterNew.create(state);
+//        var consolePort = new ConsolePort();
+//        consolePort.process(testRouter);
+
+
+
+//        var state = new State();
+//        var testRouter = RouterCreateFactory.MegaNewRouter.create(state);
+//        var consolePort2 = new ConsolePort2();
+//        consolePort2.process(testRouter);
+
+
+
+
+//        var testRouter2 = RouterConfigV2.create(state2);
+
+
+
+//
+//        var state2 = new State();
+//        var testRouter2 = RouterConfigV2.create(state2);
+//        var consolePort3 = new ConsolePort2();
+//        consolePort3.process(testRouter2);
+
+
+
+
 //        var mainRouter = RouterCreateFactory.MainRouter.create(state);
 //        var consolePort = new ConsolePort();
 //        consolePort.process(mainRouter);
@@ -34,7 +70,7 @@ public class Main {
 
     private static void startRouter(){
         try(Scanner scanner = new Scanner(System.in)) {
-            var newRouter = new Router(scanner);
+            var newRouter = new app.router.Router(scanner);
             newRouter.addCommand(StepsRouter.LENGTH, new RouteReadInputLength(newRouter));
             newRouter.addCommand(StepsRouter.OPTIONS, new RouteOptions(newRouter));
             newRouter.addCommand(StepsRouter.INPUT_DATA, new RouteDataInput(newRouter));
