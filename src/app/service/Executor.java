@@ -17,8 +17,6 @@ public class Executor<T> implements IExecutor<T> {
     @Override
     public void sort(T[] arr, Sorter<T> sorter) {
         sorter.sort(arr, comparator);
-        Arrays.stream(arr)
-                .forEach(System.out::println);
     }
 
     @Override
