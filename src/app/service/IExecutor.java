@@ -1,9 +1,7 @@
 package app.service;
 
-import app.search.Searcher;
-import app.sort.Sorter;
-
-import java.util.Comparator;
+import app.service.search.Searcher;
+import app.service.sort.Sorter;
 
 public interface IExecutor<T> {
     void sort(T[] arr, Sorter<T> sorter);

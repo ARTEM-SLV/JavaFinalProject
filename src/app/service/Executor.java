@@ -1,8 +1,8 @@
 package app.service;
 
 import app.enums.OptionsType;
-import app.search.Searcher;
-import app.sort.Sorter;
+import app.service.search.Searcher;
+import app.service.sort.Sorter;
 
 import java.util.Arrays;
 import java.util.Comparator;

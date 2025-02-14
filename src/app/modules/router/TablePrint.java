@@ -5,7 +5,8 @@ import app.model.Book;
 import app.model.Car;
 import app.model.Vegetable;
 
-public class TablePrint {
+public final class TablePrint {
+    private TablePrint() {}
     public static void print(OptionsType type, Object[] items) {
 
         var format = "%-40s %-40s %-40s%n";
