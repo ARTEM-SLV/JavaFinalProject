@@ -2,6 +2,7 @@ package app;
 
 import app.assembly.RouterAssemblyV1;
 import app.assembly.RouterAssemblyV2;
+import app.assembly.RouterAssemblyV3;
 import app.enums.StepsRouter;
 import app.enums.OptionsType;
 import app.model.Car;
@@ -22,50 +23,14 @@ import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) {
-
         var state = new State();
         var router = new Router("root");
         router.addRoute(new VersionConsoleMenu(router, "console-version"));
         router.addGroup(RouterAssemblyV1.create(state));
         router.addGroup(RouterAssemblyV2.create(state));
+        router.addGroup(RouterAssemblyV3.create(state));
         var cPort = new ConsolePort<Router>();
         cPort.process(router);
-
-
-//        startRouter();
-
-//        var state = new State();
-//        var testRouter = RouterCreateFactory.ConfigRouterNew.create(state);
-//        var consolePort = new ConsolePort();
-//        consolePort.process(testRouter);
-
-
-
-//        var state = new State();
-//        var testRouter = RouterCreateFactory.MegaNewRouter.create(state);
-//        var consolePort2 = new ConsolePort2();
-//        consolePort2.process(testRouter);
-
-
-
-
-//        var testRouter2 = RouterConfigV2.create(state2);
-
-
-
-//
-//        var state2 = new State();
-//        var testRouter2 = RouterConfigV2.create(state2);
-//        var consolePort3 = new ConsolePort2();
-//        consolePort3.process(testRouter2);
-
-
-
-
-//        var mainRouter = RouterCreateFactory.MainRouter.create(state);
-//        var consolePort = new ConsolePort();
-//        consolePort.process(mainRouter);
-//        testSortAndSearch();
     }
 
     private static void startRouter(){
