@@ -18,7 +18,7 @@ public class RouterAssemblyV3 {
         router.addRoute(new SortRoute(router, "/sort").to("/v3-menu"));
 
         router.addRoute(new SelectOptionType(router, "/option").to("/search"));
-        router.addRoute(new SearchRoute(router, "/search").to("/v3"));
+        router.addRoute(new SearchRoute(router, "/search").to("/v3-menu"));
 
 
 

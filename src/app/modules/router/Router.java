@@ -23,13 +23,6 @@ public class Router extends BaseRouter {
         return this;
     }
 
-    private BaseRouter searchRoot(BaseRouter router) {
-        if (router.parentRouter == null) {
-            return router;
-        }
-
-        return this.searchRoot(router.parentRouter);
-    }
 
     public void navigateTo(String path) {
         var route = super.routes.get(path);
@@ -43,9 +36,9 @@ public class Router extends BaseRouter {
 
 
 
-        var s = searchRouter(this, path);
-        root.currentRoute = s.currentRoute;
-        System.out.println(s);
+        var search = searchRouter(this, path);
+        root.currentRoute = search.currentRoute;
+//        System.out.println(s);
 //        if (s.name.equals(path)) {
 //            root.currentRoute = s.currentRoute;
 //        } else if (route == null) {

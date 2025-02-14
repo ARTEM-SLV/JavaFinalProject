@@ -63,7 +63,7 @@ public class Validator {
                 return value;
             }
         } catch (NumberFormatException e) {
-            throw new NumberFormatException("Ошибка! Введите целое число.\n" + e);
+            throw new NumberFormatException("Ошибка! Введите целое число.\n");
         } catch (Exception e) {
             throw new RuntimeException(e.getMessage());
         }
@@ -80,7 +80,7 @@ public class Validator {
                 return value;
             }
         } catch (NumberFormatException e) {
-            throw new NumberFormatException("Ошибка! Введите целое число.\n" + e);
+            throw new NumberFormatException("Ошибка! Введите целое число.\n");
         } catch (Exception e) {
             throw new RuntimeException(e.getMessage());
         }

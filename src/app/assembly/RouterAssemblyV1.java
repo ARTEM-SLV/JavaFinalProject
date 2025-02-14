@@ -12,9 +12,9 @@ public class RouterAssemblyV1 {
         root.addRoute(new MenuRoute(root, "/menu"));
 
 
-        root.addGroup(RouterCreateFactory.MegaNewRouter.configReadFileRouter(state));
-        root.addGroup(RouterCreateFactory.MegaNewRouter.configRandomRouter(state));
-        root.addGroup(RouterCreateFactory.MegaNewRouter.configFillManuallyRouter(state));
+        root.addGroup(RouterAssemblyV1.configReadFileRouter(state));
+        root.addGroup(RouterAssemblyV1.configRandomRouter(state));
+        root.addGroup(RouterAssemblyV1.configFillManuallyRouter(state));
 
         return root;
     }
@@ -28,7 +28,7 @@ public class RouterAssemblyV1 {
                 .to("/input").back("/options"));
         router.addRoute(new DataInputRoute(router, "/input")
                 .to("/a-options").back("/options"));
-        router.addRoute(new ActionOptionsRoute(router, "/a-options")
+        router.addRoute(new ActionOptionsRoute(router, "/a-options").back("/fill-manually")
                 .to("/sort").back("/input-length"));
         router.addRoute(new SortRoute(router, "/sort")
                 .to("/search"));

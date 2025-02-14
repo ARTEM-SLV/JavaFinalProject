@@ -49,12 +49,21 @@ public abstract class BaseRouter {
                 this.currentRoute.execute(args);
             } catch (Exception e) {
                 if (e instanceof BackException) {
-//                    this.currentRoute = this.routes.get("/menu");
+//                    var root = this.searchRoot(this);
+//                    root.currentRoute = this.routes.get(e.getMessage());
                 }
                 throw e;
             }
         } else {
             System.out.println("Текущий маршрут не установлен.");
         }
+    }
+
+    protected BaseRouter searchRoot(BaseRouter router) {
+        if (router.parentRouter == null) {
+            return router;
+        }
+
+        return this.searchRoot(router.parentRouter);
     }
 }
