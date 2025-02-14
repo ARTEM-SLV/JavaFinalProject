@@ -1,8 +1,8 @@
 package app.routes;
 
-import app.input.RandomBookGenerator;
-import app.input.RandomCarGenerator;
-import app.input.RandomVegetableGenerator;
+import app.utility.random.RandomBookGenerator;
+import app.utility.random.RandomCarGenerator;
+import app.utility.random.RandomVegetableGenerator;
 import app.modules.router.core.BaseRoute;
 import app.modules.router.Router;
 import app.modules.router.exeptions.BackException;

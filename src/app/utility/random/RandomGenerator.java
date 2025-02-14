@@ -1,4 +1,4 @@
-package app.input;
+package app.utility.random;
 
 
 public interface RandomGenerator<T> {

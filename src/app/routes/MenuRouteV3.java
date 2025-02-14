@@ -3,12 +3,12 @@ package app.routes;
 import app.modules.router.Router;
 import app.modules.router.core.BaseRoute;
 import app.modules.router.exeptions.ExitException;
-import app.validation.Validator;
+import app.utility.validation.Validator;
 
-public class V3MenuRoute extends BaseRoute {
+public class MenuRouteV3 extends BaseRoute {
     private final Router router;
 
-    public V3MenuRoute(Router router, String name) {
+    public MenuRouteV3(Router router, String name) {
         super(name);
         this.router = router;
     }

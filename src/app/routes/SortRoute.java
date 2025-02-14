@@ -9,8 +9,8 @@ import app.modules.router.Router;
 import app.modules.router.exeptions.BackException;
 import app.service.Executor;
 import app.service.IExecutor;
-import app.sort.ShellSort;
-import app.sort.Sorter;
+import app.service.sort.ShellSort;
+import app.service.sort.Sorter;
 
 import java.io.Serializable;
 

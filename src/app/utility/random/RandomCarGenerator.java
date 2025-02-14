@@ -1,4 +1,4 @@
-package app.input;
+package app.utility.random;
 
 import app.model.Car;
 
