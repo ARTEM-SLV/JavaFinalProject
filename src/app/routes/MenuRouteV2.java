@@ -4,10 +4,10 @@ import app.modules.router.core.BaseRoute;
 import app.modules.router.Router;
 import app.modules.router.exeptions.ExitException;
 
-public class MenuRouteNNNN extends BaseRoute {
+public class MenuRouteV2 extends BaseRoute {
     private final Router router;
 
-    public MenuRouteNNNN(Router router, String path) {
+    public MenuRouteV2(Router router, String path) {
         super(path);
         this.router = router;
     }

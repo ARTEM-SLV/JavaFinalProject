@@ -1,4 +1,4 @@
-package app.search;
+package app.service.search;
 
 import java.util.Comparator;
 

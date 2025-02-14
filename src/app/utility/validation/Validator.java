@@ -1,4 +1,4 @@
-package app.validation;
+package app.utility.validation;
 
 import app.model.Book;
 import app.model.Car;

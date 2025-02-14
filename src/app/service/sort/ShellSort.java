@@ -1,4 +1,4 @@
-package app.sort;
+package app.service.sort;
 
 import java.util.Comparator;
 

@@ -2,7 +2,7 @@ package app.routes;
 
 import app.modules.router.Router;
 import app.modules.router.core.BaseRoute;
-import app.validation.Validator;
+import app.utility.validation.Validator;
 
 public class AddMenuRoute extends BaseRoute {
 

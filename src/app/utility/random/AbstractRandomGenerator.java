@@ -1,6 +1,6 @@
-package app.input;
+package app.utility.random;
 
-import app.utility.FileIO;
+import app.utility.file.FileIO;
 
 import java.io.Serializable;
 import java.lang.reflect.Array;
