@@ -36,7 +36,7 @@ public class V3MenuRoute extends BaseRoute {
             case 3 -> this.router.navigateTo("/write-file");
             case 4 -> this.router.navigateTo("/sort");
             case 5 -> this.router.navigateTo("/option");
-            case 0 -> this.router.navigateTo("/search");
+            case 0 -> throw new ExitException("EXIT");
 
         }
 

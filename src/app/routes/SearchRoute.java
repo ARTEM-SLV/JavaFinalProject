@@ -38,11 +38,13 @@ public class SearchRoute extends BaseRoute {
 
         var selectOptionType = this.router.getState().optionsType;
         if (this.router.getState().Data == null || this.router.getState().Data.length < 1) {
-            throw new BackException("Массив пустой.");
+            this.router.navigateTo(this.pathToRoute);
+            throw new BackException("Нет данных");
         }
 
         if (selectOptionType == null) {
-            throw new BackException("Тип не выбран.");
+            this.router.navigateTo(this.pathToRoute);
+            throw new BackException("Не выбран тип");
         }
 
         int carCount = 0;
@@ -112,7 +114,7 @@ public class SearchRoute extends BaseRoute {
     }
 
     private void search(Object[] data, OptionsType type, String args) throws Exception {
-        String[] values = args.split("[,:;.]+");
+        String[] values = args.split("[,:;]+");
 
         switch (type) {
             case CAR -> {

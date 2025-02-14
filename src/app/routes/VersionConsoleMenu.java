@@ -5,7 +5,7 @@ import app.modules.router.Router;
 
 public class VersionConsoleMenu extends BaseRoute {
 
-    private Router router;
+    private final Router router;
 
     public VersionConsoleMenu(Router router, String name) {
         super(name);
@@ -30,7 +30,6 @@ public class VersionConsoleMenu extends BaseRoute {
             case 1 -> this.router.navigateTo("/main");
             case 2 ->  this.router.navigateTo("/root");
             case 3 ->  this.router.navigateTo("/v3");
-//            case 3 ->  this.router.navigateTo("/v3-add-menu");
         }
     }
 }

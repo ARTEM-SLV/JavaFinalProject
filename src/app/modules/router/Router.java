@@ -23,13 +23,6 @@ public class Router extends BaseRouter {
         return this;
     }
 
-    private BaseRouter searchRoot(BaseRouter router) {
-        if (router.parentRouter == null) {
-            return router;
-        }
-
-        return this.searchRoot(router.parentRouter);
-    }
 
     public void navigateTo(String path) {
         var route = super.routes.get(path);
@@ -43,38 +36,8 @@ public class Router extends BaseRouter {
 
 
 
-        var s = searchRouter(this, path);
-        root.currentRoute = s.currentRoute;
-        System.out.println(s);
-//        if (s.name.equals(path)) {
-//            root.currentRoute = s.currentRoute;
-//        } else if (route == null) {
-//            root.currentRoute = root.routes.get(path);
-//        } else {
-//            root.currentRoute = route;
-//        }
-
-
-
-//        if (super.routes == null) {
-//            super.parentRouter.currentRoute = route;
-//        } else {
-//            super.currentRoute = route;
-//        }
-
-//      если нашли маршрут то записываем и выходим
-//        if (!super.routes.containsKey(path)) {
-//            var split = path.split("/");
-//            var step = 0;
-//            var link = this.parentRouter;
-//            while (link != null) {
-//                if(link.name.equals(split[step])) {
-//                    link.currentRoute = link.routes.get("/"+split[1]);
-//                    link = link.parentRouter;
-//                    step++;
-//                }
-//            }
-//        }
+        var search = searchRouter(this, path);
+        root.currentRoute = search.currentRoute;
     }
 
 
@@ -82,16 +45,10 @@ public class Router extends BaseRouter {
         var group = super.groups.get(path);
         if(group == null) return;
 
-//        var router = this.searchRouter(this, path);
-//        if (router != null) {
-//            super.currentRoute = router.currentRoute;
-//        } else {
-//            super.currentRoute = group.currentRoute;
-//        }
+
         var root = searchRoot(this);
 
         root.currentRoute = group.currentRoute;
-//        this.parentRouter = this;
     }
 
     private BaseRouter searchRouter(BaseRouter router, String path) {
