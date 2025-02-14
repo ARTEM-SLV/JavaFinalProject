@@ -49,7 +49,7 @@ public abstract class BaseRouter {
                 this.currentRoute.execute(args);
             } catch (Exception e) {
                 if (e instanceof BackException) {
-                    this.currentRoute = this.routes.get("/menu");
+//                    this.currentRoute = this.routes.get("/menu");
                 }
                 throw e;
             }

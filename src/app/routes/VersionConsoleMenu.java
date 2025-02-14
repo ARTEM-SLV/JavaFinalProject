@@ -17,6 +17,7 @@ public class VersionConsoleMenu extends BaseRoute {
         System.out.println("""
                 1 - V1
                 2 - V2
+                3 - V3
                 """);
     }
 
@@ -28,6 +29,8 @@ public class VersionConsoleMenu extends BaseRoute {
         switch (val) {
             case 1 -> this.router.navigateTo("/main");
             case 2 ->  this.router.navigateTo("/root");
+            case 3 ->  this.router.navigateTo("/v3");
+//            case 3 ->  this.router.navigateTo("/v3-add-menu");
         }
     }
 }

@@ -18,6 +18,11 @@ public class Router extends BaseRouter {
         this.state = state;
     }
 
+    public BaseRouter to(String path) {
+        this.navigateTo(path);
+        return this;
+    }
+
     private BaseRouter searchRoot(BaseRouter router) {
         if (router.parentRouter == null) {
             return router;

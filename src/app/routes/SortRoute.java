@@ -33,6 +33,7 @@ public class SortRoute extends BaseRoute {
         Object[] data = router.getState().Data;
 
         if (data == null || data.length < 1) {
+            this.router.navigateTo(this.pathToRoute);
             throw new BackException("Массив пуст.");
         }
 
