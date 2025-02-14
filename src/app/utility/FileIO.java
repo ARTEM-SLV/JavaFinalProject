@@ -78,11 +78,11 @@ public class FileIO {
     /**
      * Запись в файл.
      *
-     * @param filename - имя файла включая расширение
+     * @param filename        - имя файла включая расширение
      * @param AddOrUpdateFile - True: добавить к файлу. False: заменить файл полностью.
-     * @param objects объект реализующий интерфейс Serializable или массив таких объектов
+     * @param objects         объект реализующий интерфейс Serializable или массив таких объектов
      */
-    public static void write(String filename,  boolean AddOrUpdateFile, Serializable... objects) {
+    public static void write(String filename, boolean AddOrUpdateFile, Serializable... objects) {
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(filename, AddOrUpdateFile))) {
             writer.newLine();
             writer.newLine();
@@ -118,4 +118,7 @@ public class FileIO {
         }
     }
 
+    public static boolean isValidFilename(String filename) {
+        return filename.matches("^[\\w,\\s-]+\\.[A-Za-z]{3}$");
+    }
 }

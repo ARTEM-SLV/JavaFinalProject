@@ -24,6 +24,6 @@ public class Executor<T> implements IExecutor<T> {
     @Override
     public void search(T[] arr, Searcher<T> searcher, T element) {
         int index = searcher.search(arr, element, comparator);
-        System.out.println("Результат поиска элемента: " + (index >= 0 ? element + " найден в позиции " + index : "не найден"));
+        System.out.println("Результат поиска элемента: " + (index >= 0 ? element + " найден в строке " + (index + 1) : "не найден"));
     }
 }

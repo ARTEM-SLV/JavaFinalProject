@@ -1,112 +1,111 @@
 package app.modules.router;
+
+import app.modules.router.core.BaseRouter;
 import app.modules.router.state.State;
 
-import java.util.HashMap;
-import java.util.Map;
-
-public class Router {
-    private final String path;
-    private final Map<String, BaseRoute> routes = new HashMap<>();
-    private final Map<String, Router> groupRouter = new HashMap<>();
-    private Router headRouter;
-    private BaseRoute currRoute;
+public class Router extends BaseRouter {
     private State state;
 
-    public Router(String path) {
-        this.path = path;
-    }
-
-    public void setState(State state) {
-        this.state = state;
-    }
-
-    public String getPath() {
-        return this.path;
-    }
-
-    private Router getHeadRouter() {
-        return this.headRouter;
-    }
-
-    public void addToGroupRouter(String path, Router router) {
-        this.groupRouter.put(path, router);
-        router.headRouter = this;
-        router.state = this.state;
-    }
-
-    public Router getRouter() {
-        return this;
+    public Router(String name) {
+        super(name);
     }
 
     public State getState() {
         return this.state;
     }
 
-    private Map<String, Router> getGroupRouter() {
-        return this.groupRouter;
+    public void setState(State state) {
+        this.state = state;
     }
 
-    private Router getRouterByGroup(String path) {
-        return this.groupRouter.get(path);
-    }
-
-
-    public void navigateToPath(String path) {
-        // Если путь существует в groupRouter
-        if (this.groupRouter.containsKey(path)) {
-            Router targetRouter = this.groupRouter.get(path);
-            this.currRoute = targetRouter.currRoute;
-//            this.headRouter = targetRouter;
-            targetRouter.headRouter = this; // Устанавливаем обратную ссылку
-            return; // Выходим, так как нашли маршрут
+    private BaseRouter searchRoot(BaseRouter router) {
+        if (router.parentRouter == null) {
+            return router;
         }
 
-        // Если текущий путь совпадает с запрошенным
-        if (this.path.equals(path)) {
-            this.currRoute = this.routes.get(path);
-            return; // Выходим, так как нашли маршрут
-        }
-
-        // Если headRouter существует и его путь совпадает с запрошенным
-        if (this.headRouter != null && this.headRouter.path.equals(path)) {
-            this.headRouter.currRoute = this.headRouter.routes.get(path);
-            return; // Выходим, так как нашли маршрут
-        }
-
-        System.out.println("Маршрут не найден: " + path);
-    }
-
-    public void addRoute(String name, BaseRoute route) {
-        if (this.currRoute == null) {
-            this.currRoute = route;
-        }
-        this.routes.put(name, route);
+        return this.searchRoot(router.parentRouter);
     }
 
     public void navigateTo(String path) {
-        if (!this.routes.containsKey(path)) return;
-        var getRoute = this.routes.get(path);
-        this.headRouter.currRoute = getRoute;
-    }
+        var route = super.routes.get(path);
 
-    public void start() {
-        this.currRoute.render();
-    }
+        var root = this.searchRoot(this);
 
-    public void process(String args) throws Exception {
-        if (this.currRoute == null) return;
-        this.currRoute.execute(args);
-    }
-
-    public String getFullPath() {
-        StringBuilder fullPath = new StringBuilder(this.path);
-        Router current = this;
-
-        while (current.getHeadRouter() != null) {
-            current = current.getHeadRouter();
-            fullPath.insert(0, current.getPath() + "/" + this.currRoute.getName());
+        if (route != null) {
+            root.currentRoute = route;
+            return;
         }
 
-        return fullPath.toString();
+
+
+        var s = searchRouter(this, path);
+        root.currentRoute = s.currentRoute;
+        System.out.println(s);
+//        if (s.name.equals(path)) {
+//            root.currentRoute = s.currentRoute;
+//        } else if (route == null) {
+//            root.currentRoute = root.routes.get(path);
+//        } else {
+//            root.currentRoute = route;
+//        }
+
+
+
+//        if (super.routes == null) {
+//            super.parentRouter.currentRoute = route;
+//        } else {
+//            super.currentRoute = route;
+//        }
+
+//      если нашли маршрут то записываем и выходим
+//        if (!super.routes.containsKey(path)) {
+//            var split = path.split("/");
+//            var step = 0;
+//            var link = this.parentRouter;
+//            while (link != null) {
+//                if(link.name.equals(split[step])) {
+//                    link.currentRoute = link.routes.get("/"+split[1]);
+//                    link = link.parentRouter;
+//                    step++;
+//                }
+//            }
+//        }
+    }
+
+
+    public void navigateToGroup(String path) {
+        var group = super.groups.get(path);
+        if(group == null) return;
+
+//        var router = this.searchRouter(this, path);
+//        if (router != null) {
+//            super.currentRoute = router.currentRoute;
+//        } else {
+//            super.currentRoute = group.currentRoute;
+//        }
+        var root = searchRoot(this);
+
+        root.currentRoute = group.currentRoute;
+//        this.parentRouter = this;
+    }
+
+    private BaseRouter searchRouter(BaseRouter router, String path) {
+        // Проверяем текущий роутер
+        if (router.routes.containsKey(path)) {
+            return router;
+        }
+
+        // Проверяем группы текущего роутера
+        if (router.groups.containsKey(path)) {
+            return router.groups.get(path);
+        }
+
+        // Рекурсивно проверяем родительские роутеры
+        if (router.parentRouter != null) {
+            return searchRouter(router.parentRouter, path);
+        }
+
+        // Если ничего не найдено
+        return null;
     }
 }
