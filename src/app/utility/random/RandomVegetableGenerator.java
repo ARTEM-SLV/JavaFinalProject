@@ -6,6 +6,6 @@ import app.model.Vegetable;
 public class RandomVegetableGenerator extends AbstractRandomGenerator<Vegetable> {
 
     public RandomVegetableGenerator() {
-        super("vegetables.txt", Vegetable.class);
+        super("E:\\Java\\FinalProject\\resources\\vegetables.txt", Vegetable.class);
     }
 }
