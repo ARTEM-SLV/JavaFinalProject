@@ -49,8 +49,7 @@ public abstract class BaseRouter {
                 this.currentRoute.execute(args);
             } catch (Exception e) {
                 if (e instanceof BackException) {
-//                    var root = this.searchRoot(this);
-//                    root.currentRoute = this.routes.get(e.getMessage());
+
                 }
                 throw e;
             }

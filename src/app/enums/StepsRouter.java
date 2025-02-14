@@ -1,7 +1,6 @@
 package app.enums;
 
 public enum StepsRouter {
-//    MENU,
     LENGTH,
     OPTIONS,
     PRINT,
